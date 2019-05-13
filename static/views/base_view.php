@@ -12,7 +12,7 @@
     <div class="header">
         <div class="header header_main">
             <i class="icon icon_color_white icon_size_header-fit icon_type_archive"></i>
-            <a class="header__title" href="#">COURSACHEIT</a>
+            <a class="header__title" href="/">COURSACHEIT</a>
         </div>
     </div>
     <div id="main">
