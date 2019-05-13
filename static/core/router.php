@@ -7,11 +7,12 @@ class Router {
         // контроллер и действие по умолчанию
         $controller_name = 'Menu';
         $action_name = 'index';
-    
-        $routes = explode('/', $_SERVER['REQUEST_URI']);
-    
+        $without_symb = explode('?', $_SERVER['REQUEST_URI']);
+        $routes = explode('/', $without_symb[0]);
+
         // получаем имя контроллера
         if (!empty($routes[1])) {
+
             $controller_name = $routes[1];
         }
     
@@ -45,18 +46,20 @@ class Router {
              * но для упрощения сразу сделаем редирект на страницу 404
              */
             (new Router)->ErrorPage404();
+            echo 'dermo';
         }
     
         // создаем контроллер
         $controller = new $controller_name;
         $action = $action_name;
-    
+
         if (method_exists($controller, $action)) {
             // вызываем действие контроллера
             $controller->$action();
         } else {
             // здесь также разумнее было бы кинуть исключение
             (new Router)->ErrorPage404();
+            echo $action;
         }
     
     }

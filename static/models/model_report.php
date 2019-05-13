@@ -7,10 +7,12 @@ class ModelReport extends Model
             array(
                 'action' => 'bonus_miles_hist',
                 'title' => 'Начисление бонусных миль',
+                'data' => false,
             ),
             array(
                 'action' => 'booking_from',
                 'title' => 'Продажа билетов на рейс',
+                'data' => true,
             ),
         );
 //        return array(
@@ -27,5 +29,8 @@ class ModelReport extends Model
 //            ),
 //            // todo
 //        );
+    }
+    public function get_bonus_miles_hist() {
+
     }
 }
