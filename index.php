@@ -1,3 +1,3 @@
 <?php
-    echo "Hello PHP!";
-?>
+    ini_set('display_errors', 1);
+    require_once 'static/bootstrap.php';
