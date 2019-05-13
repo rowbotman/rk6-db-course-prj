@@ -1,0 +1,108 @@
+@import "../modules/variables";
+@import "../modules/mixins";
+
+$icons-path: "../icons";
+
+$collection-icon: $icons-path + "/collection.svg";
+$cross-icon: $icons-path + "/close.svg";
+$add_report-icon: $icons-path + "/document_edit.svg";
+$search-icon: $icons-path + "/search.svg";
+$signout-icon: $icons-path + "/sign_out.svg";
+$archive-icon: $icons-path + "/archive.svg";
+$delete-icon: $icons-path + "/delete.svg";
+
+
+$icon-size: 14px, 14px;
+$icon-sizes: (small: (12px, 12px),
+        large: (20px, 20px),
+        xlarge: (24px, 24px),
+        xxlarge: (32px, 32px),
+        xxxlarge: (40px, 40px),
+        fit: (60%, 60%),
+        header-fit: (2.5em, 2.5em));
+
+
+@function get-icon-span-height($size) {
+  @if $size == nil {
+    @return nth($icon-size, 1);
+  }
+  @return nth(map-get($icon-sizes, $size), 1);
+}
+@function get-icon-span-width($size) {
+  @if $size == nil {
+    @return nth($icon-size, 2);
+  }
+  @return nth(map-get($icon-sizes, $size), 2);
+}
+
+// icons
+.icon {
+  display: inline-block;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  height: get-icon-span-height(nil);
+  width: get-icon-span-width(nil);
+
+  &_size {
+    @each $size, $x in $icon-sizes {
+      &_#{$size} {
+        height: get-icon-span-height($size);
+        width: get-icon-span-width($size);
+      }
+    }
+  }
+
+  &_color {
+    &_green {
+      background-color: $secondary-color;
+    }
+    &_orange {
+      background-color: $orange;
+    }
+    &_white {
+      background-color: white;
+    }
+    &_black {
+      background-color: black;
+    }
+    &_muted {
+      background-color: $muted-color-dark;
+    }
+    &_muted-light {
+      background-color: $muted-color-light;
+    }
+  }
+  &_type {
+    &_cross {
+      @include mask-image($cross-icon);
+    }
+    &_collection {
+      @include mask-image($collection-icon);
+    }
+    &_lens   {
+      @include mask-image($search-icon);
+    }
+    &_report {
+      @include mask-image($add_report-icon);
+    }
+    &_archive {
+      @include mask-image($archive-icon);
+      @media screen and (orientation: landscape) and (max-width: 700px){
+        height: 1.5em;
+        width: 1.5em;
+      }
+    }
+    &_signout {
+      @include mask-image($signout-icon);
+    }
+    &_delete {
+      @include mask-image($delete-icon);
+    }
+  }
+  //flags
+  &_btn {
+    cursor: pointer;
+  }
+}

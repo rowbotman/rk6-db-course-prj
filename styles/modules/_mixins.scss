@@ -1,0 +1,43 @@
+@mixin appearance-none {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+@mixin hide {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+@mixin mask-image($path) {
+  -webkit-mask-image: url($path);
+  mask-image: url($path);
+}
+
+@mixin firefox() {
+  @-moz-document url-prefix() {
+    @content;
+  }
+}
+
+@mixin shadow($shadow...) {
+  -webkit-box-shadow:$shadow;
+  -moz-box-shadow:$shadow;
+  box-shadow:$shadow;
+}
+
+@mixin transition($values...) {
+  transition: $values;
+}
+
+@function make-transition($property, $duration, $timing-function: ease, $delay:0s) {
+  @return $property $duration $timing-function $delay;
+}
+
+@function darker($color) {
+  @return darken($color, 20);
+}

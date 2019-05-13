@@ -1,0 +1,7 @@
+*.swp
+*.swo
+*.out
+.idea
+*.plan
+*.map
+*.css
