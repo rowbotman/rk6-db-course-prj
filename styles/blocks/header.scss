@@ -1,0 +1,50 @@
+@import "../modules/variables";
+
+.header {
+  display: flex;
+  align-self: stretch;
+  justify-self: flex-start;
+  align-items: center;
+
+  height: 3em;
+  min-height: 3em;
+  padding-left: 5%;
+
+  @media screen and (orientation: landscape) and (max-width: 700px){
+    height: 2em;
+    min-height: 2em;
+  }
+
+  background-color: $primary-color;
+
+  &_main {
+    margin: 0 8px 24px;
+  }
+
+  &__title {
+    margin: 0 0 0 4px;
+    padding: 0;
+    font-size: 2em;
+    font-weight: bolder;
+    @media screen and (orientation: landscape) and (max-width: 700px){
+      font-size: 1em;
+    }
+
+    color: white;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  &__link {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
