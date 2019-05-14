@@ -1,0 +1,180 @@
+// form-related invariant styles
+@import "../modules/variables";
+@import "../modules/mixins";
+
+$input-height: 18px;
+$input-padding-top: 6px;
+$input-padding-bottom: 4px;
+$input-padding-sides: 10px;
+$input-border-radius: 3px;
+
+@if $input-height + $input-padding-top + $input-padding-bottom + 2px != $field-height {
+  @error ("inputs are incorrectly sized!");
+}
+
+.input {
+  $block: &;
+  position: relative;
+  z-index: $z-index-input;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  min-width: fit-content;
+  padding: 0;
+
+  border: 1px solid $border-color;
+  border-radius: $input-border-radius;
+
+
+  @include transition(make-transition(box-shadow, 0.2s));
+
+  &:focus-within {
+    z-index: $z-index-shadow;
+
+    border-color: lightblue;
+    @include shadow($shadow-focus);
+  }
+
+  &_status {
+    &_error {
+      border-color: $error-color;
+    }
+  }
+
+  &__icon {
+    margin-left: 5px;
+    margin-right: 5px;
+
+    &:last-child {
+      margin-left: 0;
+      margin-right: 10px;
+    }
+
+    &:first-child {
+      margin-left: 10px;
+      margin-right: 0;
+    }
+  }
+
+  &__field {
+
+    display: inline-block;
+
+    height: $input-height;
+    min-width: 0;
+    width: 100%;
+    &_upd {
+      width: 150px;
+    }
+    flex-grow: 1;
+    margin: 0; // kinda !important but i feel bad putting it there
+    padding: $input-padding-top $input-padding-sides / 2 $input-padding-bottom $input-padding-sides / 2;
+
+    @include firefox {
+      // 16 + 7 = 20 + 3 so size doesn't change, just the alignment
+      height: $input-height - 3px;
+      padding-bottom: $input-padding-bottom + 3px;
+    }
+
+    line-height: 12px;
+
+    border-radius: $input-border-radius;
+    border-width: 0;
+    background-color: white;
+    color: black;
+    font-size: 12px;
+    outline: none;
+
+    &:first-child {
+      padding-left: $input-padding-sides;
+    }
+    &:last-child {
+      padding-right: $input-padding-sides;
+    }
+
+  }
+
+  &__field-appendix {
+    display: inline-block;
+    margin: 0;
+    height: $input-height; // minus the border
+    padding: 8px 2px 3px 2px;
+
+    border-radius: $input-border-radius;
+    font-size: 12px;
+    pointer-events: none;
+    @include firefox {
+      // BECAUSE APPARENTLY THIS IS NOT IMPLIED
+      line-height: 12px;
+    }
+  }
+
+  &__inner {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__tooltip {
+    $arrow-length: 6px;
+    $arrow-width: 4px;
+    $padding: 10px;
+
+    position: absolute;
+    left: calc(100% + #{$arrow-length + 2px});
+    z-index: $z-index-tooltip;
+
+    display: table;
+    min-width: 180px;
+    padding: $padding;
+
+    border-radius: 3px;
+    background-color: white;
+    @include shadow($shadow-tiny);
+    pointer-events: none;
+
+    &::before {
+      position: absolute;
+      top: calc(50% - #{$arrow-width});
+      left: - $arrow-length;
+
+      content: "";
+      border-style: solid;
+      border-width: $arrow-width $arrow-length $arrow-width 0;
+      border-color: transparent white transparent transparent;
+    }
+  }
+
+  &__tooltip-title {
+    display: table-row;
+    max-width: 30px;
+
+    font-size: $small-font-size;
+    color: black;
+  }
+
+  &__tooltip-help {
+    display: table-row;
+
+    font-size: $smaller-font-size;
+    color: $muted-color-dark;
+  }
+
+  border-width: 1px;
+  &__link {
+    background: none;
+    border: none;
+    color: $link-color;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: -8px;
+    font-family: Helvetica, Arial, sans-serif;
+  }
+}
+
+//.input {
+//  // preference over input__field in case an input has both types
+//  border-width: 1px;
+//}

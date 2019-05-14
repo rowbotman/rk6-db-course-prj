@@ -1,0 +1,94 @@
+@import "../modules/mixins";
+
+$select-height: 12px;
+$select-padding-top: 8px;
+$select-padding-bottom: 6px;
+$select-padding-sides: 10px;
+$select-border-radius: 3px;
+
+
+.select {
+  $block: &;
+  @include transition(make-transition(box-shadow, 0.2s));
+  position: relative;
+
+  display: inline-block;
+  flex-direction: row;
+  align-items: center;
+
+  height: $field-height - 2px;
+  min-width: fit-content;
+  padding: 0;
+
+  border: 1px solid $border-color;
+  border-radius: $select-border-radius;
+
+  &:focus-within {
+    z-index: $z-index-shadow;
+
+    border-color: $focus-color;
+    @include shadow($shadow-focus);
+  }
+  :-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #000;
+  }
+  &::after {
+    position: absolute;
+    top: ($field-height - get-icon-span-height(nil)) / 2;
+    right: 3px;
+    z-index: $z-index-input + 1;
+
+    @extend .icon;
+    @extend .icon_color_black;
+    @extend .icon_type_dropdown;
+
+    pointer-events: none; // click falls through to the select
+    content: "";
+  }
+
+  &_stretched {
+    width: 100%;
+  }
+
+  &_status {
+    &_error {
+      border-color: $error-color;
+      &:focus-within {
+        border-color: $error-color;
+      }
+    }
+  }
+
+  &__field {
+    @include appearance-none;
+
+    display: inline-block;
+    flex-grow: 1;
+
+    height: $field-height - 2px;
+    line-height: $field-height - 2px;
+    padding: 1px $select-padding-sides + 12px
+    0 $select-padding-sides;
+    font-size: $select-height;
+    @include firefox() {
+      padding-top: 0;
+    }
+
+    background-color: white;
+    color: black;
+    border-radius: $select-border-radius;
+    border-width: 0;
+
+    &:focus {
+      outline: none;
+      border: none;
+    }
+  }
+
+  &__chosen-icon {
+    margin-left: 10px;
+  }
+
+  //options are ugly af but can't do much without js
+}

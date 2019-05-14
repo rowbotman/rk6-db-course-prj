@@ -1,0 +1,40 @@
+@import "../modules/variables";
+.report-list {
+  display: inline-block;
+
+  width: 53%;
+  min-width: 300px;
+  //max-width: 400px;
+
+  height: 50%;
+  min-height: 200px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  border: 1px solid #E0E0E0;;
+  border-radius: 5px;
+
+  &__item {
+    height: 35px;
+    display: block; //contents;
+    //margin: auto 2% auto 2%;
+    &-d {
+      background-color: $focus-color;
+      padding-left: 5%;
+      //height: 100%;
+      min-height: 35px;
+      display: flex;
+      align-items: center;
+    }
+    &-w {
+      background-color: $body-color;
+      padding-left: 5%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &__num {
+    display: inline;
+    padding-right: 5px;
+  }
+}

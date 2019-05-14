@@ -10,7 +10,7 @@ $search-icon: $icons-path + "/search.svg";
 $signout-icon: $icons-path + "/sign_out.svg";
 $archive-icon: $icons-path + "/archive.svg";
 $delete-icon: $icons-path + "/delete.svg";
-
+$drop-down-icon: $icons-path + "/drop_down.svg";
 
 $icon-size: 14px, 14px;
 $icon-sizes: (small: (12px, 12px),
@@ -99,6 +99,9 @@ $icon-sizes: (small: (12px, 12px),
     }
     &_delete {
       @include mask-image($delete-icon);
+    }
+    &_dropdown {
+      @include mask-image($drop-down-icon);
     }
   }
   //flags
