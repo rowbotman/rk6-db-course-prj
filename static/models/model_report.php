@@ -12,25 +12,36 @@ class ModelReport extends Model
             array(
                 'action' => 'booking_from',
                 'title' => 'Продажа билетов на рейс',
-                'data' => true,
+                'data' => array('year'),
             ),
         );
-//        return array(
-//
-//            array(
-//                'Year' => '2012',
-//                'Site' => 'http://DunkelBeer.ru',
-//                'Description' => 'Промо-сайт темного пива Dunkel от немецкого производителя Löwenbraü выпускаемого в России пивоваренной компанией "CАН ИнБев".'
-//            ),
-//            array(
-//                'Year' => '2012',
-//                'Site' => 'http://ZopoMobile.ru',
-//                'Description' => 'Русскоязычный каталог китайских телефонов компании Zopo на базе Android OS и аксессуаров к ним.'
-//            ),
-//            // todo
-//        );
     }
     public function get_bonus_miles_hist() {
 
+    }
+    public function get_search_list() {
+        return array(
+            array(
+                'action' => 'rich_users',
+                'title' => 'Самые дорогие билеты на рейс',
+                'data' => array('year'),
+            ),
+            array(
+                'action' => 'users_without_tickets',
+                'title' => 'Пассажиры, ни разу не покупавшие билеты',
+                'data' => false,
+            ),
+            array(
+                'action' => 'without_tickets_in',
+                'title' => 'Пассажиры, не покупавшие билеты в месяце',
+                'data' => array('month', 'year'),
+            ),
+            array(
+                'action' => 'often_bought_users_in',
+                'title' => 'Пассажиры, чаще всего покупавшие билеты период',
+                'data' => array('month', 'month', 'year'),
+            ),
+
+        );
     }
 }
