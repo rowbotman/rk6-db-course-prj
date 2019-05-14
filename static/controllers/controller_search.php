@@ -20,10 +20,13 @@ class Controller_Search extends Controller
 join ticket t on (p.uid = t.user_id)
 where t.price =
 (
-    select max(price) from ticket where flight_id = ?
-) and t.flight_id = ?;';
-        $user_data = [$_GET['var1']];
-        $data = DataBase::paramQuery($sql, $user_data);
+    select max(price) from ticket where flight_id = :flight_id
+) and t.flight_id = :flight_id';
+        $user_data = $_GET['var1'];
+        $data = DataBase::paramQueryWithBind($sql, [':flight_id', $user_data, PDO::PARAM_INT, 24]);
+//        $data = DataBase::paramQueryWithBind($sql,
+//            array([1, $user_data, PDO::PARAM_INT, 24],
+//                  [1, $user_data, PDO::PARAM_INT, 24]));
         $this->view->render('new_report_view.php', 'base_view.php', $data);
     }
     function action_booking_from() { // TODO: add t.class in sql statement

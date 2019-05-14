@@ -1,6 +1,6 @@
 <div class="report report_main">
     <div class="report__header">
-        <div class="report__title">Отчет</div>
+        <div class="report__title"><h1>Отчет</h1></div>
     </div>
     <div class="report__items">
         <?php

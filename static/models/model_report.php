@@ -28,7 +28,7 @@ class ModelReport extends Model
                 array(
                     'action' => 'rich_users',
                     'title' => 'Самые дорогие билеты на рейс',
-                    'data' => array('year'),
+                    'data' => array('id'),
                 ),
                 array(
                     'action' => 'users_without_tickets',

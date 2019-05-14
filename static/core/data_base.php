@@ -35,4 +35,14 @@ class DataBase {
         $stmt->execute((array) $params);
         return $stmt->fetch(PDO::FETCH_LAZY);
     }
+
+    public static function paramQueryWithBind($query, $params) {
+        $stmt = self::connection()->prepare($query);
+//        foreach ($params as $item) {
+//            $stmt->bindParam($item[0], $item[1], $item[2], $item[3]);
+//        }
+        $stmt->bindParam($params[0], $params[1], $params[2]);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 }
