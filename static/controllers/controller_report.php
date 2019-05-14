@@ -27,8 +27,8 @@ GROUP BY t.flight_id, t.departure;';
     function action_booking_from() { // TODO: add t.class in sql statement
             $sql = 'select f.dep_airport, t.departure, COUNT(*) from ticket t
 join flight f on (t.flight_id = f.uid) where year(t.departure) = ?
-group by f.dep_airport, t.departure';
-        $user_data = [$_GET['booking_from']];
+group by f.dep_airport, t.departure;';
+        $user_data = [$_GET['var1']];
         $data = DataBase::paramQuery($sql, $user_data);
         $this->view->render('new_report_view.php', 'base_view.php', $data);
     }
