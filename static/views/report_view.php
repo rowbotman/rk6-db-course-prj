@@ -8,7 +8,7 @@
     ];
     $is_light = true;
     $i = 1;
-    foreach($data as $title)
+    foreach($data['rows'] as $title)
     {
         echo '<div class="report-list__item">';
         if ($is_light) {
@@ -17,12 +17,12 @@
             echo '<div class="report-list__item-d">';
         }
         if ($title['data']) {
-            echo '<form action="/report/'.$title['action'].'" method="GET">';
+            echo '<form action="/'.$data['url'].$title['action'].'" method="GET">';
             echo '<div class="report-list__num">'.$i.'.</div>';
             echo '<input type="submit" value="'.$title['title'].'" class="input__link">';
             $item_id = 1;
             foreach ($title['data'] as $item) {
-                echo '<div class="select"><select name="'.$title['action'].$item_id.'" id="'.$item_id.'" class=" select__field">';
+                echo '<div class="select"><select name="var'.$item_id.'" id="'.$item_id.'" class=" select__field">';
                 switch ($item) {
                     case 'day':
                         for ($j = 1; $j <= 31; ++$j) {
@@ -49,38 +49,11 @@
                 echo '</select></div>';
                 ++$item_id;
             }
-            foreach (['day', 'month', 'year'] as $item) {
-                if (array_key_exists($item, $title['data'])) {
-                    echo '<div class="select"><select name="'.$title['action'].$i.'" id="'.$i.'" class=" select__field">';
-                    switch ($item) {
-                        case 'day':
-                            for ($j = 1; $j <= 31; ++$j) {
-                                echo '<option value="'.$j.'">'.$j.'</option>';
-                            }
-                            break;
-                        case 'month': {
-                            for ($j = 0; $j < 13; ++$j) {
-                                echo '<option value="'.$j.'">'.$months[$j].'</option>';
-                            }
-                            break;
-                        }
-                        case 'year': {
-                            for ($j = 2019; $j >= 1990; --$j) {
-                                echo '<option value="'.$j.'">'.$j.'</option>';
-                            }
-                            break;
-                        }
-                    }
-                    echo '</select></div>';
-                }
-                echo '</form>';
-            }
-
+            echo '</form>';
         } else {
             echo '<div class="report-list__num">'.$i.'.</div>';
-            echo '<a href="/report/'.$title['action'].'">'.$title['title'].'</a>';
+            echo '<a href="/'.$data['url'].$title['action'].'">'.$title['title'].'</a>';
         }
-
 
 
         echo '</div></div>';

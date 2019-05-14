@@ -22,7 +22,7 @@ where t.price =
 (
     select max(price) from ticket where flight_id = ?
 ) and t.flight_id = ?;';
-        $user_data = [$_GET['rich_users']];
+        $user_data = [$_GET['var1']];
         $data = DataBase::paramQuery($sql, $user_data);
         $this->view->render('new_report_view.php', 'base_view.php', $data);
     }
@@ -30,7 +30,7 @@ where t.price =
         $sql = 'select f.dep_airport, t.departure, COUNT(*) from ticket t
 join flight f on (t.flight_id = f.uid) where year(t.departure) = ?
 group by f.dep_airport, t.departure';
-        $user_data = [$_GET['booking_from1']];
+        $user_data = [$_GET['var1']];
         $data = DataBase::paramQuery($sql, $user_data);
         $this->view->render('new_report_view.php', 'base_view.php', $data);
     }
