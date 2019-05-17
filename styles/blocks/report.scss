@@ -1,0 +1,14 @@
+.report {
+
+  &__items {
+    display: table;
+  }
+  &__row {
+    display: table-row;
+  }
+  &__elem {
+    display: table-cell;
+    padding: 5px 10px 5px 10px;
+    border: 1px solid #683e3e99;
+  }
+}

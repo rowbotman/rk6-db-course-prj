@@ -22,7 +22,7 @@ class DataBase {
     public static function query($query) {
         $stmt = self::connection()->query($query);
         $stmt->execute();
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public static function paramQuery($query, $params = array()) {
@@ -43,6 +43,56 @@ class DataBase {
 //        }
         $stmt->bindParam($params[0], $params[1], $params[2]);
         $stmt->execute();
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function procedureCall($query, $check_param) {
+        $sql = 'SELECT @'.$check_param.';';
+        echo $sql;
+            // TODO: исправить на переменные sql
+        $stmt = self::connection()->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+//        $stmt = self::connection()->prepare($check_param);
+//        $stmt->execute();
+//        $result = $stmt->rowCount();
+//        $stmt->closeCursor();
+        if ($result[0] != NULL) {
+//            foreach ($result as $item) {
+//                echo 'aaaaa'.$item.' aaaaaaaa';
+//            }
+            return ['Отчет уже существует', $result];
+        }
+
+
+        $stmt = self::connection()->prepare($query);
+        $stmt->execute();
+        $stmt->closeCursor();
+        return ['Отчет успешно создан'];
+    }
+
+    public static function procedureCallWithParam($query, $check_query, $params) {
+        // TODO: исправить на переменные sql
+//        $stmt = self::connection()->prepare($sql);
+//        $stmt->execute();
+//        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt = self::connection()->prepare($check_query);
+        $stmt->execute();
+        $result = $stmt->rowCount();
+        $stmt->closeCursor();
+        if ($result) {
+//        if ($result[0] != NULL) {
+//            foreach ($result as $item) {
+//                echo 'aaaaa'.$item.' aaaaaaaa';
+//            }
+            return ['Отчет уже существует', $result];
+        }
+
+
+        $stmt = self::connection()->prepare($query);
+        $stmt->execute($params);
+        $stmt->closeCursor();
+        return ['Отчет успешно создан'];
+
     }
 }

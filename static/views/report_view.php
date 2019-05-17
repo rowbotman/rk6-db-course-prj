@@ -24,14 +24,17 @@
             foreach ($title['data'] as $item) {
                 echo '<div class="select"><select name="var'.$item_id.'" id="'.$item_id.'" class=" select__field">';
                 switch ($item) {
-                    case 'day':
+                    case 'day':{
                         for ($j = 1; $j <= 31; ++$j) {
-                            echo '<option value="'.$j.'">'.$j.'</option>';
+                            $val = sprintf('%02d', $j);
+                            echo '<option value="' . $val . '">' . $j . '</option>';
                         }
                         break;
+                    }
                     case 'month': {
                         for ($j = 0; $j < 13; ++$j) {
-                            echo '<option value="'.$j.'">'.$months[$j].'</option>';
+                            $val = sprintf('%02d', $j);
+                            echo '<option value="'.$val.'">'.$months[$j].'</option>';
                         }
                         break;
                     }
@@ -50,6 +53,17 @@
                 ++$item_id;
             }
             echo '</form>';
+        } elseif ($title['data_get']) {
+            echo '<div class="report-list__num">'.$i.'.</div>';
+            $k = 1;
+            $link = '/'.$data['url'].$title['action'].'?';
+            $local_data = '';
+            foreach ($title['data_get'] as $item) {
+                $link = $link.'var'.$k.'='.$item.'&';
+                $local_data = $local_data.' - '.$item;
+                ++$k;
+            }
+            echo '<a href="'.$link.'">'.$title['title'].' в период '.$local_data.'</a>';
         } else {
             echo '<div class="report-list__num">'.$i.'.</div>';
             echo '<a href="/'.$data['url'].$title['action'].'">'.$title['title'].'</a>';
