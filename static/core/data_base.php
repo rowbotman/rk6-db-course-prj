@@ -28,7 +28,7 @@ class DataBase {
     public static function paramQuery($query, $params = array()) {
         $stmt = self::connection()->prepare($query);
         $stmt->execute((array) $params);
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     public static function getRow($query, $params = array()) {
         $stmt = self::connection()->prepare($query);
@@ -81,18 +81,14 @@ class DataBase {
         $result = $stmt->rowCount();
         $stmt->closeCursor();
         if ($result) {
-//        if ($result[0] != NULL) {
-//            foreach ($result as $item) {
-//                echo 'aaaaa'.$item.' aaaaaaaa';
-//            }
-            return ['Отчет уже существует', $result];
+            return false;
         }
 
 
         $stmt = self::connection()->prepare($query);
         $stmt->execute($params);
         $stmt->closeCursor();
-        return ['Отчет успешно создан'];
+        return true;
 
     }
 }

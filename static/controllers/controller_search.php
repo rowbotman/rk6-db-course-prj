@@ -36,9 +36,9 @@ where t.price =
         $this->view->render('new_report_view.php', 'base_view.php', $data);
     }
     function action_booking_from() { // TODO: add t.class in sql statement
-        $sql = 'select f.dep_airport, t.departure, COUNT(*) from ticket t
+        $sql = 'select f.dep_airport, t.departure, COUNT(*) as tickets_num from ticket t
 join flight f on (t.flight_id = f.uid) where year(t.departure) = ?
-group by f.dep_airport, t.departure';
+group by f.dep_airport, t.departure order by tickets_num;';
         $user_data = [$_GET['var1']];
         if ($user_data) {
             $data = DataBase::paramQuery($sql, $user_data);
@@ -98,9 +98,9 @@ limit 1;';
         $this->view->render('new_report_view.php', 'base_view.php', $data);
     }
     function action_bonus_miles_hist() {
-        $sql = 'SELECT t.flight_id, t.departure, SUM(d.cur_value) FROM detail d
+        $sql = 'SELECT t.flight_id, t.departure, SUM(d.cur_value) AS sum FROM detail d
 JOIN ticket t ON (t.uid = d.ticket_id) 
-GROUP BY t.flight_id, t.departure;';
+GROUP BY t.flight_id, t.departure ORDER BY sum;';
         $data = DataBase::query($sql);
         $this->view->render('new_report_view.php', 'base_view.php', $data);
     }

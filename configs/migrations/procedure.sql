@@ -24,7 +24,7 @@ CREATE PROCEDURE get_airport_rating
 )
 BEGIN
     DECLARE airport_var    VARCHAR(256)  DEFAULT '';
-    DECLARE miles_var      INT           DEFAULT 0;
+    DECLARE tickets_var      INT           DEFAULT 0;
     DECLARE done           INT           DEFAULT 0;
     DECLARE hash_id_var    VARCHAR(64)   DEFAULT '';
     DECLARE hash_group_var VARCHAR(64)   DEFAULT '';
@@ -34,33 +34,33 @@ BEGIN
                         SHA(CONCAT(start_date_in, end_date_in)),f.dep_airport,
                         COUNT(t.uid)
         FROM flight f JOIN ticket t ON (t.flight_id = f.uid)
-        WHERE t.departure BETWEEN start_date_in AND end_date_in
+        WHERE f.dep_date BETWEEN start_date_in AND end_date_in
         GROUP BY f.dep_airport;
     DECLARE cur2 CURSOR FOR
         SELECT DISTINCT SHA(CONCAT(start_date_in, end_date_in, f.arr_airport)),
                         SHA(CONCAT(start_date_in, end_date_in)),f.arr_airport,
                         COUNT(t.uid)
         FROM flight f JOIN ticket t ON (t.flight_id = f.uid)
-        WHERE t.departure BETWEEN start_date_in AND end_date_in
+        WHERE f.dep_date BETWEEN start_date_in AND end_date_in
         GROUP BY f.arr_airport;
 
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
 
     OPEN cur1;
     WHILE done = 0 DO
-        FETCH cur1 INTO hash_id_var, hash_group_var, airport_var, miles_var;
+        FETCH cur1 INTO hash_id_var, hash_group_var, airport_var, tickets_var;
         INSERT INTO airport_rating (hash_id, hash_group, start_date, end_date, airport, tickets_out)
-            VALUES (hash_id_var, hash_group_var, start_date_in, end_date_in, airport_var, miles_var)
-            ON DUPLICATE KEY UPDATE tickets_out = miles_var;
+            VALUES (hash_id_var, hash_group_var, start_date_in, end_date_in, airport_var, tickets_var)
+            ON DUPLICATE KEY UPDATE tickets_out = tickets_var;
     END WHILE;
 
     SET done = 0;
     OPEN cur2;
     WHILE done = 0 DO
-        FETCH cur2 INTO hash_id_var, hash_group_var, airport_var, miles_var;
+        FETCH cur2 INTO hash_id_var, hash_group_var, airport_var, tickets_var;
         INSERT INTO airport_rating (hash_id, hash_group, start_date, end_date, airport, tickets_in)
-            VALUES (hash_id_var, hash_group_var, start_date_in, end_date_in, airport_var, miles_var)
-            ON DUPLICATE KEY UPDATE tickets_in = miles_var;
+            VALUES (hash_id_var, hash_group_var, start_date_in, end_date_in, airport_var, tickets_var)
+            ON DUPLICATE KEY UPDATE tickets_in = tickets_var;
     END WHILE;
 END $$
 DELIMITER ; $$

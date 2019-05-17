@@ -21,7 +21,7 @@ class Controller_Report extends Controller
 
     function action_airport_rating() {
         $is_call = 'is_rating_exist'; // TODO add sql variables
-        $data = [['' => 'Empty set']];
+        $data = false;
         if ($_GET['var1'] && $_GET['var2'] &&
             $_GET['var3'] && $_GET['var4']) {
             $sha_str = $_GET['var2'].'-'.$_GET['var1'].'-01 00:00:00'.$_GET['var4'].'-'.$_GET['var3'].'-01 00:00:00';
@@ -32,7 +32,7 @@ class Controller_Report extends Controller
             $sql = 'CALL get_airport_rating(?, ?)';
             $data = DataBase::procedureCallWithParam($sql, $check_sql, $user_data);
         }
-        $this->view->render('new_report_view.php', 'base_view.php', [$data]);
+        $this->view->render('status_view.php', 'base_view.php', $data);
     }
 
 }
