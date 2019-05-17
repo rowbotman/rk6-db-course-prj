@@ -2,16 +2,22 @@
 
 .menu {
   display: block;
-  margin: 11% auto 0 auto;
+  margin: 9% auto 0 auto;
   align-items: center;
-  border: 0;
   max-width: 600px;
-  height: 90%;
   width: 80%;
+  border: 1px solid $border-color;
+  /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); */
+  border-radius: 3px;
+
+  &__header {
+    display: block;
+    /* padding-left: 22px; */
+    text-align: center;
+    border-bottom: 1px solid $border-color;
+  }
 
   &__items {
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
-
     border-radius: 3px;
   }
 

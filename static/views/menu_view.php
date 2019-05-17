@@ -1,4 +1,7 @@
 <div class="menu">
+    <div class="menu__header">
+        <h1>Меню</h1>
+    </div>
     <div class="menu__items">
         <div class="menu__item menu__item-d">
             <a class="menu__link menu__text" href="/report">Новый отчет</a>
