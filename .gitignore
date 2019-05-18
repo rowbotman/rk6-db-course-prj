@@ -6,3 +6,4 @@
 *.map
 *.css
 .htaccess
+node_modules
