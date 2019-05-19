@@ -5,8 +5,17 @@
   border-radius: 8px;
   padding: 0 16px 16px 16px;
   margin: 64px;
+  min-width: 364px;
+
   &__title {
     width: 100%;
+  }
+
+  &_main {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   &__header {
@@ -35,5 +44,11 @@
       font-size: 18px;
       font-weight: bold;
     }
+  }
+}
+
+.status {
+  &_error {
+    color: $error-color;
   }
 }

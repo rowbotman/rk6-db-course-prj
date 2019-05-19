@@ -11,16 +11,16 @@
 
   &__item {
     height: 35px;
-    display: block; //contents;
-    //margin: auto 2% auto 2%;
+    display: block;
+
     &-d {
       background-color: $focus-color;
       padding-left: 5%;
-      //height: 100%;
       min-height: 35px;
       display: flex;
       align-items: center;
     }
+
     &-w {
       background-color: $body-color;
       padding-left: 5%;

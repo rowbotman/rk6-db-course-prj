@@ -1,5 +1,6 @@
 <?php
 require_once('static/models/model_report.php');
+
 class Controller_OldReports extends Controller {
     public function __construct()
     {
@@ -28,5 +29,4 @@ where r.hash_group = ? order by sum desc, r.tickets_in desc, r.tickets_out desc;
         }
         $this->view->render('new_report_view.php', 'base_view.php', $data);
     }
-
 }

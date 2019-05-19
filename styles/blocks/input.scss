@@ -73,7 +73,6 @@ $input-border-radius: 3px;
     padding: $input-padding-top $input-padding-sides / 2 $input-padding-bottom $input-padding-sides / 2;
 
     @include firefox {
-      // 16 + 7 = 20 + 3 so size doesn't change, just the alignment
       height: $input-height - 3px;
       padding-bottom: $input-padding-bottom + 3px;
     }
@@ -161,7 +160,6 @@ $input-border-radius: 3px;
     color: $muted-color-dark;
   }
 
-  border-width: 1px;
   &__link {
     background: none;
     border: none;
@@ -173,8 +171,3 @@ $input-border-radius: 3px;
     font-family: Helvetica, Arial, sans-serif;
   }
 }
-
-//.input {
-//  // preference over input__field in case an input has both types
-//  border-width: 1px;
-//}

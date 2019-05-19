@@ -4,6 +4,19 @@ class ModelReport extends Model
     public function action()
     {
         return array(
+            'title' => 'Not Found',
+            'url' => 'report/',
+            'rows' => array(
+                array(
+                    'action' => '',
+                    'row' => '',
+                    'data' => false,
+                    'data_get' => false,
+                )),
+        );
+    }
+    public function get_bonus_miles_hist() {
+        return array(
             'title' => 'Список доступных отчетов',
             'url' => 'report/',
             'rows' => array(
@@ -14,8 +27,6 @@ class ModelReport extends Model
                     'data_get' => false,
                 )),
         );
-    }
-    public function get_bonus_miles_hist() {
 
     }
 

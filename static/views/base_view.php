@@ -15,6 +15,7 @@
             <i class="icon icon_color_white icon_size_header-fit icon_type_archive"></i>
             <a class="header__title" href="/">COURSACHEIT</a>
         </div>
+        <a class="header__exit" href="/exit">Выход</a>
     </div>
     <div id="main">
         <?php include 'static/views/'.$content_view; ?>

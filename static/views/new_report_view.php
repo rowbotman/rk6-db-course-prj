@@ -3,7 +3,8 @@
         <div class="report__title"><h1>Отчет</h1></div>
         <div class="report__header_icon">
             <span class="icon-bg icon_btn icon-bg_borderless icon-bg_size_xxlarge  menu__icon-bg">
-                <i class="icon icon_color_black icon_type_cross icon_size_fit"></i>
+                <a class="icon icon_color_black icon_type_cross icon_size_fit" href="<?php echo Router::$prev_url?>">
+                </a>
             </span>
         </div>
     </div>

@@ -1,5 +1,6 @@
 <?php
 require_once('static/models/model_report.php');
+
 class Controller_Search extends Controller
 {
     function __construct()
