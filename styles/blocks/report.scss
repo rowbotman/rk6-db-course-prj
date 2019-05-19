@@ -1,7 +1,21 @@
 @import "../modules/variables";
 .report {
   display: block;
-  padding-bottom: 8%;
+  border: 1px solid;
+  border-radius: 8px;
+  padding: 0 16px 16px 16px;
+  margin: 64px;
+  &__title {
+    width: 100%;
+  }
+
+  &__header {
+    display: flex;
+    &_icon {
+      position: relative;
+      margin: 4px -8px;
+    }
+  }
 
   &__items {
     display: table;

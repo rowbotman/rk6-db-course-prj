@@ -30,8 +30,8 @@ CREATE TABLE IF NOT EXISTS ticket
     uid         INT                         NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_id     INT                         NOT NULL,
     flight_id   INT                         NOT NULL,
-    dep_airport VARCHAR(128)                NOT NULL CHECK ( dep_airport <> '' ),
-    departure   TIMESTAMP                   NOT NULL DEFAULT current_timestamp,
+#     dep_airport VARCHAR(128)                NOT NULL CHECK ( dep_airport <> '' ),
+#     departure   TIMESTAMP                   NOT NULL DEFAULT current_timestamp,
     class       INT                         NOT NULL DEFAULT 4,
     price       INT                         NOT NULL DEFAULT 0,
 
@@ -51,6 +51,6 @@ CREATE TABLE IF NOT EXISTS detail
 
 
 
-GRANT ALL   PRIVILEGES ON bonus_program      TO 'root'@'localhost';
-GRANT ALL   PRIVILEGES ON bonus_program      TO 'bonus'@'localhost';
+GRANT ALL   PRIVILEGES ON bonus_program TO 'root'@'localhost';
+GRANT ALL   PRIVILEGES ON bonus_program TO 'bonus'@'localhost';
 FLUSH PRIVILEGES;

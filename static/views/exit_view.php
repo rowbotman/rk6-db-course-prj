@@ -6,14 +6,16 @@
         </div>
     </div>
     <div class="exit__body">
-        <div class="image">
-            <img src="../../icons/me.jpg" class="image__item" alt="author1">
+        <div class="image image__author">
+            <img src="../../icons/me.jpg" class="image__author_circle" alt="author1">
         </div>
-        <div class="exit__name">
-            <span class="exit__text exit__text_main">Прокопенко Андрей</span>
-        </div>
-        <div class="exit__description">
-            <span class="exit__text">Скопировал пару статей с хабра и надеется, что баллы по бд ему поставят просто за это</span>
+        <div class="exit__text">
+            <span class="exit__text_main">Андрей</span>
+            <div class="exit__description">Фронт/Бэк/Фуллкек</div>
+            <hr>
+            <span class="exit__description">
+                Скопировал пару статей с хабра и надеется, что баллы по бд ему поставят просто за это
+            </span>
         </div>
     </div>
 </div>
