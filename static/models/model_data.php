@@ -14,7 +14,6 @@ class ModelData extends Model
                 'Site' => 'http://ZopoMobile.ru',
                 'Description' => 'Русскоязычный каталог китайских телефонов компании Zopo на базе Android OS и аксессуаров к ним.'
             ),
-            // todo
         );
     }
 }

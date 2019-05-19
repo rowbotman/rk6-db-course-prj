@@ -12,13 +12,6 @@ class View
      */
     function render($content_view, $template, $data = null)
     {
-        /*
-		if(is_array($data)) {
-			// преобразуем элементы массива в переменные
-			extract($data);
-		}
-		*/
-
         include 'static/views/' . $template;
     }
 }

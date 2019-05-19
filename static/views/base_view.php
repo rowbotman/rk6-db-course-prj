@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="theme-color" content="#fb6a06">
     <title>Flight bonus program</title>
+    <link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
@@ -14,6 +15,7 @@
             <i class="icon icon_color_white icon_size_header-fit icon_type_archive"></i>
             <a class="header__title" href="/">COURSACHEIT</a>
         </div>
+        <a class="header__exit" href="/exit">Выход</a>
     </div>
     <div id="main">
         <?php include 'static/views/'.$content_view; ?>
