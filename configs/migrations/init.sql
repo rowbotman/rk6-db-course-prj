@@ -1,11 +1,11 @@
-CREATE DATABASE IF NOT EXISTS bonus_program;
-DROP TABLE IF EXISTS flight;
-DROP TABLE IF EXISTS ticket;
 DROP TABLE IF EXISTS detail;
+DROP TABLE IF EXISTS ticket;
+DROP TABLE IF EXISTS flight;
 DROP TABLE IF EXISTS profile;
-
-
 DROP ROLE IF EXISTS bonus;
+
+
+CREATE DATABASE IF NOT EXISTS bonus_program;
 CREATE USER'bonus'@'localhost' IDENTIFIED BY 'bonus';
 
 USE bonus_program;
@@ -30,8 +30,6 @@ CREATE TABLE IF NOT EXISTS ticket
     uid         INT                         NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_id     INT                         NOT NULL,
     flight_id   INT                         NOT NULL,
-#     dep_airport VARCHAR(128)                NOT NULL CHECK ( dep_airport <> '' ),
-#     departure   TIMESTAMP                   NOT NULL DEFAULT current_timestamp,
     class       INT                         NOT NULL DEFAULT 4,
     price       INT                         NOT NULL DEFAULT 0,
 
@@ -50,6 +48,13 @@ CREATE TABLE IF NOT EXISTS detail
 ) ENGINE=InnoDB;
 
 
+CREATE OR REPLACE VIEW spring_flight AS
+SELECT MAX(num) FROM (
+    SELECT COUNT(*) AS num FROM ticket t
+    JOIN flight f ON (f.uid = t.flight_id)
+    WHERE YEAR(f.dep_date) = 2013 AND MONTH(f.dep_date) BETWEEN 3 AND 4
+    GROUP BY t.user_id
+) subquery;
 
 GRANT ALL   PRIVILEGES ON bonus_program TO 'root'@'localhost';
 GRANT ALL   PRIVILEGES ON bonus_program TO 'bonus'@'localhost';

@@ -9,7 +9,6 @@ CREATE TABLE IF NOT EXISTS airport_rating
     end_date          TIMESTAMP           NOT NULL DEFAULT current_timestamp,
     tickets_out       INT                 NOT NULL DEFAULT 0,
     tickets_in        INT                 NOT NULL DEFAULT 0
-#   premium_percent   FLOAT               NOT NULL DEFAULT 0.0
 ) ENGINE=InnoDB;
 
 

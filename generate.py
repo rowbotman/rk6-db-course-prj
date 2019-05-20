@@ -4,7 +4,7 @@
 # File Name : generate2.py
 # Purpose : just for fun
 # Creation Date : 21-03-2019
-# Last Modified : Пт 17 май 2019 13:07:29
+# Last Modified : Пн 20 май 2019 03:16:36
 # Created By : Andrey Prokopenko, BMSTU
 ############################################
 
@@ -61,14 +61,13 @@ def initTickets(value):
     return val
 
 def insertIntoTickets(value):
-#    val = json.loads(ticketsJson)
-    sql = "INSERT INTO ticket (user_id, flight_id, dep_airport, departure, price) VALUES (%s, %s, %s, %s, %s)"
+    #    val = json.loads(ticketsJson)
+    sql = "INSERT INTO ticket (uid, user_id, flight_id, class, price) VALUES (default, %s, %s, %s, %s)"
     for i in range(100):
         insertion = []
         insertion.append(value[i]['user_id'])
-        insertion.append(random.randint(1, 100))#value[i]['flight_id'])
-        insertion.append(value[i]['dep_airport'])
-        insertion.append(randomDate("2010/01/01 01:01:01", "2018/01/01 01:01:01", random.random()))#initTickets(int(value[i]['departure'])))
+        insertion.append(random.randint(1, 100))
+        insertion.append(random.randint(1, 4))
         insertion.append(value[i]['price'])
         req = tuple(insertion)
         print(req)
