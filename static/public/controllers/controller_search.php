@@ -1,5 +1,5 @@
 <?php
-require_once('static/models/model_report.php');
+require_once('static/public/models/model_report.php');
 
 class Controller_Search extends Controller
 {

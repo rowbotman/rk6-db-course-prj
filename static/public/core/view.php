@@ -12,6 +12,6 @@ class View
      */
     function render($content_view, $template, $data = null)
     {
-        include 'static/views/' . $template;
+        include 'static/public/views/' . $template;
     }
 }

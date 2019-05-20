@@ -31,17 +31,17 @@ class Router {
         // подцепляем файл с классом модели (файла модели может и не быть)
     
         $model_file = strtolower($model_name).'.php';
-        $model_path = "static/models/".$model_file;
+        $model_path = "static/public/models/".$model_file;
     
         if (file_exists($model_path)) {
-            include "static/models/".$model_file;
+            include "static/public/models/".$model_file;
         }
     
         // подцепляем файл с классом контроллера
         $controller_file = strtolower($controller_name).'.php';
-        $controller_path = "static/controllers/".$controller_file;
+        $controller_path = "static/public/controllers/".$controller_file;
         if (file_exists($controller_path)) {
-            include "static/controllers/".$controller_file;
+            include "static/public/controllers/".$controller_file;
         } else {
             /*
              * правильно было бы кинуть здесь исключение,

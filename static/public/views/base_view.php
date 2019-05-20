@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="theme-color" content="#fb6a06">
     <title>Flight bonus program</title>
-    <link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="shortcut icon" href="../../../favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
 <div id="application">
@@ -18,7 +18,7 @@
         <a class="header__exit" href="/exit">Выход</a>
     </div>
     <div id="main">
-        <?php include 'static/views/'.$content_view; ?>
+        <?php include 'static/public/views/'.$content_view; ?>
     </div>
 </div>
 </body>
