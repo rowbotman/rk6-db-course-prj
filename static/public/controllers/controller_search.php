@@ -73,7 +73,7 @@ WHERE YEAR(f.dep_date) <> ? AND MONTH(f.dep_date) <> ?;';
     }
 
     function action_often_bought_users_in() {
-        $sql = 'with spring_flight as 
+        $sql = 'WITH spring_flight AS 
 ( 
   SELECT MAX(num) FROM (
   SELECT COUNT(*) AS num FROM ticket t

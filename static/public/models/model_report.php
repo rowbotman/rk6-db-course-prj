@@ -31,8 +31,8 @@ class ModelReport extends Model
     }
 
     public function get_old_reports() {
-        $sql = 'SELECT DISTINCT DATE_FORMAT(start_date, \'%Y-%m-%d\') as start_date,
-                                DATE_FORMAT(end_date, \'%Y-%m-%d\') as end_date
+        $sql = 'SELECT DISTINCT DATE_FORMAT(start_date, \'%Y-%m-%d\') AS start_date,
+                                DATE_FORMAT(end_date, \'%Y-%m-%d\') AS end_date
 FROM airport_rating ORDER BY start_date, end_date;';
         $data = DataBase::query($sql);
         $report_list = array(

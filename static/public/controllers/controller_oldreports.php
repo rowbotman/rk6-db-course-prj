@@ -16,8 +16,8 @@ class Controller_OldReports extends Controller {
 
     public function action_airport_rating()
     {
-        $sql = 'select r.airport, r.tickets_out, r.tickets_in, r.tickets_out + r.tickets_in as sum from airport_rating r
-where r.hash_group = ? order by sum desc, r.tickets_in desc, r.tickets_out desc;';
+        $sql = 'SELECT r.airport, r.tickets_out, r.tickets_in, r.tickets_out + r.tickets_in AS sum FROM airport_rating r
+WHERE r.hash_group = ? ORDER BY sum DESC, r.tickets_in DESC, r.tickets_out DESC;';
         $data = [['' => 'Empty set']];
         if ($_GET['var1'] && $_GET['var2']) {
             $sha_str = $_GET['var1'] . ' 00:00:00' . $_GET['var2'] . ' 00:00:00';

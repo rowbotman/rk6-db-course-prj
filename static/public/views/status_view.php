@@ -12,3 +12,10 @@ switch ($data) {
         echo '<h1 class="status_error">Введите диапазон</h1>';
     }
 }
+?>
+<div class="report-list__item">
+    <form class="input__btns">
+        <button formaction="/oldreports" class="input__btns_btn report-list__item-d">Существующие отчеты</button>
+        <button formaction="/report" class="input__btns_btn report-list__item-w">Назад</>
+    </form>
+</div>

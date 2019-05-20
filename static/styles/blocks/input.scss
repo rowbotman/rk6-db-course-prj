@@ -170,4 +170,13 @@ $input-border-radius: 3px;
     margin-left: -8px;
     font-family: Helvetica, Arial, sans-serif;
   }
+
+  &__btns {
+    display: ruby-base-container;
+    &_btn {
+      border: 1px solid $muted-color-dark;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
 }

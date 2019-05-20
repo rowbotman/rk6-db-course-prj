@@ -53,14 +53,21 @@
     ```   
     + Показать сведения о пассажирах, чаще всего покупавших билет в марте-апреле 2013 (используя view);
     ```sql   
-       CREATE VIEW IF NOT EXIST `spring_flight` AS
-           SELECT t.user_id FROM ticket t 
-           WHERE year(t.departure) = 2013 AND (
-               MONTH(t.departure) = 3 OR MONTHt.departure) = 4);
-       SELECT s.user_id, COUNT(s.user_id) num FROM profile p
-       JOIN spring_flight s ON (s.user_id = p.uid) 
-       GROUP BY s.user_id 
-       ORDER BY count(s.user_id) DESC LIMIT 1;
+       CREATE OR REPLACE VIEW spring_flight AS  
+       (  
+           SELECT MAX(num) FROM (  
+               SELECT COUNT(*) AS num FROM ticket t  
+               JOIN flight f ON (f.uid = t.flight_id)  
+               WHERE YEAR(f.dep_date) = 2013   
+               AND MONTH(f.dep_date) BETWEEN 3 AND 4  
+               GROUP BY t.user_id  
+           ) subquery  
+       );  
+       
+       SELECT p.* FROM profile p JOIN ticket t ON (t.user_id = p.uid)  
+       JOIN flight f ON (f.uid = t.flight_id)    
+       WHERE YEAR(f.dep_date) = 2013 AND MONTH(f.dep_date) BETWEEN 3 AND 4   
+       GROUP BY p.uid HAVING COUNT(*) = (SELECT * FROM spring_flight);  
      ```  
 3. Реализация веб-приложения:  
     Приложение реализовано в соответствии с паттерном MVC (Model, View, Controller), поэтому переходы на различные странцы, получение и отправка данных по принципу работы одинаковы (Отрисовкой занимаются view, получением данных от пользователя и контролем над логикой работы view и модели занимаются контроллеры, а в моделях происходит получение данных для базовой работы приложения. Приведем пример работы стартовой страницы.  
