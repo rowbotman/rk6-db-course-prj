@@ -1,0 +1,54 @@
+@import "../modules/variables";
+.report {
+  display: block;
+  border: 1px solid;
+  border-radius: 8px;
+  padding: 0 16px 16px 16px;
+  margin: 64px;
+  min-width: 364px;
+
+  &__title {
+    width: 100%;
+  }
+
+  &_main {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__header {
+    display: flex;
+    &_icon {
+      position: relative;
+      margin: 4px -8px;
+    }
+  }
+
+  &__items {
+    display: table;
+  }
+
+  &__row {
+    display: table-row;
+  }
+
+  &__elem {
+    display: table-cell;
+    padding: 5px 10px 5px 10px;
+    border: 1px solid #683e3e99;
+
+    &_main {
+      font-family: $font-stack;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  }
+}
+
+.status {
+  &_error {
+    color: $error-color;
+  }
+}

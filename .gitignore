@@ -1,0 +1,10 @@
+*.swp
+*.swo
+*.out
+.idea
+*.plan
+*.map
+*.css
+.htaccess
+node_modules
+package-lock.json
