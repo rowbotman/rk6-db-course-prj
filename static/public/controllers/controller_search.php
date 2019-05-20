@@ -21,7 +21,7 @@ JOIN ticket t ON (p.uid = t.user_id)
 WHERE t.price =
 (
     SELECT max(price) FROM ticket WHERE flight_id = :flight_id
-) and t.flight_id = :flight_id';
+) AND t.flight_id = :flight_id';
         $user_data = $_GET['var1'];
         $data = [['' => 'Empty set']];
         if ($user_data) {
@@ -33,7 +33,7 @@ WHERE t.price =
         $this->view->render('new_report_view.php', 'base_view.php', $data);
     }
     function action_booking_from() { // TODO: add t.class in sql statement
-        $sql = 'SELECT f.uid as flight, MONTH(f.dep_date) as month, t.class, COUNT(t.uid) as tickets_num FROM ticket t
+        $sql = 'SELECT f.uid AS flight, MONTH(f.dep_date) AS month, t.class, COUNT(t.uid) AS tickets_num FROM ticket t
 JOIN flight f ON (t.flight_id = f.uid) WHERE YEAR(f.dep_date) = ?
 GROUP BY flight, month, t.class ORDER BY tickets_num DESC;';
         $user_data = [$_GET['var1']];
@@ -48,7 +48,7 @@ GROUP BY flight, month, t.class ORDER BY tickets_num DESC;';
 
     function action_users_without_tickets()
     {
-        $sql = 'SELECT * FROM profile p LEFT JOIN ticket t ON (t.user_id = p.uid) WHERE t.user_id IS NULL;';
+        $sql = 'SELECT p.* FROM profile p LEFT JOIN ticket t ON (t.user_id = p.uid) WHERE t.user_id IS NULL;';
         $data = DataBase::query($sql);
         if (!$data) {
             $data = [['' => 'Empty set']];

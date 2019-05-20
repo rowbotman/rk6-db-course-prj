@@ -10,7 +10,8 @@ CREATE USER'bonus'@'localhost' IDENTIFIED BY 'bonus';
 
 USE bonus_program;
 
-CREATE TABLE IF NOT EXISTS profile (
+CREATE TABLE IF NOT EXISTS profile
+(
    uid       INT                           NOT NULL AUTO_INCREMENT PRIMARY KEY,
    firstName VARCHAR(32)                   NOT NULL,
    lastName  VARCHAR(32)                   NOT NULL,
@@ -43,13 +44,15 @@ CREATE TABLE IF NOT EXISTS detail
     ticket_id   INT                         NOT NULL,
     cur_value   BIGINT                      NOT NULL DEFAULT 0,
     bonus_date  TIMESTAMP                   NOT NULL DEFAULT current_timestamp,
+
     FOREIGN KEY (profile_id) REFERENCES profile (uid),
     FOREIGN KEY (ticket_id)  REFERENCES ticket  (uid)
 ) ENGINE=InnoDB;
 
 
 CREATE OR REPLACE VIEW spring_flight AS
-SELECT MAX(num) FROM (
+SELECT MAX(num) FROM
+(
     SELECT COUNT(*) AS num FROM ticket t
     JOIN flight f ON (f.uid = t.flight_id)
     WHERE YEAR(f.dep_date) = 2013 AND MONTH(f.dep_date) BETWEEN 3 AND 4

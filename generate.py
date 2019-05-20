@@ -66,18 +66,14 @@ def insertIntoTickets(value):
     for i in range(100):
         insertion = []
         insertion.append(value[i]['user_id'])
-        insertion.append(random.randint(1, 100))
-        insertion.append(random.randint(1, 4))
+        insertion.append(value[i]['flight_id'])
+        insertion.append(value[i]['class'])
         insertion.append(value[i]['price'])
         req = tuple(insertion)
         print(req)
         mycursor.execute(sql, req);
         mydb.commit()
 
-#    for i in range(100):
-#        val[i]['departure'] = initTickets(int(val[i]['departure']))
-#    mycursor.executemany(sql, ticketsJson)
-#    mydb.commit()
     print(mycursor.rowcount, "was inserted.")
 
 def insertIntoFlight(value):

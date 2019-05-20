@@ -23,8 +23,8 @@ CREATE PROCEDURE get_airport_rating
 )
 BEGIN
     DECLARE airport_var    VARCHAR(256)  DEFAULT '';
-    DECLARE tickets_var      INT           DEFAULT 0;
-    DECLARE done           INT           DEFAULT 0;
+    DECLARE tickets_var    INT           DEFAULT 0 ;
+    DECLARE done           INT           DEFAULT 0 ;
     DECLARE hash_id_var    VARCHAR(64)   DEFAULT '';
     DECLARE hash_group_var VARCHAR(64)   DEFAULT '';
 

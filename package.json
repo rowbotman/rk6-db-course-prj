@@ -1,0 +1,15 @@
+{
+  "name": "rk6-db-course-prj",
+  "version": "1.0.0",
+  "main": "./index.php",
+  "scripts": {
+    "lint:css": "stylelint static/**/*.scss",
+    "build": "sass ./static/styles/style.scss:./static/css/style.css"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "stylelint": "^10.0.1",
+    "sass": "^1.20.1"
+  }
+}

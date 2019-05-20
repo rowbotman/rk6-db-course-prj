@@ -7,7 +7,7 @@
     </div>
     <div class="exit__body">
         <div class="image image__author">
-            <img src="../../icons/me.jpg" class="image__author_circle" alt="author1">
+            <img src="/static/icons/me.jpg" class="image__author_circle" alt="author1">
         </div>
         <div class="exit__text">
             <span class="exit__text_main">Андрей</span>
