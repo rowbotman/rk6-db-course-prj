@@ -172,11 +172,16 @@ $input-border-radius: 3px;
   }
 
   &__btns {
-    display: ruby-base-container;
+    display: inline-block;
     &_btn {
       border: 1px solid $muted-color-dark;
       border-radius: 5px;
       cursor: pointer;
+      height: 48px;
+      width: 100%;
+      justify-content: center;
+      margin-left: 4px;
+      margin-top: 4px;
     }
   }
 }
