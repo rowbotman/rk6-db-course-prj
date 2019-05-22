@@ -1,0 +1,13 @@
+@import "../modules/variables";
+.pagination {
+  display: flex;
+  height: 35px;
+  text-align: center;
+  &__elem {
+    width: 35px;
+    background-color: $primary-color-light;
+    &_current {
+      background-color: $muted-color-light;
+    }
+  }
+}

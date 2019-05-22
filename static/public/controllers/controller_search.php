@@ -3,6 +3,7 @@ require_once('static/public/models/model_report.php');
 
 class Controller_Search extends Controller
 {
+    static private $limit = 10;
     function __construct()
     {
         $this->model = new ModelReport();
@@ -33,9 +34,11 @@ WHERE t.price =
         $this->view->render('new_report_view.php', 'base_view.php', $data);
     }
     function action_booking_from() { // TODO: add t.class in sql statement
+        $limit_h = array_key_exists('page', $_GET) ? $_GET['page'] * self::$limit : self::$limit;
+        $limit_l = ($limit_h / self::$limit - 1) * self::$limit;
         $sql = 'SELECT f.uid AS flight, MONTH(f.dep_date) AS month, t.class, COUNT(t.uid) AS tickets_num FROM ticket t
 JOIN flight f ON (t.flight_id = f.uid) WHERE YEAR(f.dep_date) = ?
-GROUP BY flight, month, t.class ORDER BY tickets_num DESC;';
+GROUP BY flight, month, t.class ORDER BY tickets_num DESC LIMIT '.$limit_l.','.$limit_h.';';
         $user_data = [$_GET['var1']];
         if ($user_data) {
             $data = DataBase::paramQuery($sql, $user_data);
@@ -43,7 +46,15 @@ GROUP BY flight, month, t.class ORDER BY tickets_num DESC;';
                 $data = [['' => 'Empty set']];
             }
         }
-        $this->view->render('new_report_view.php', 'base_view.php', $data);
+        $sql = 'SELECT COUNT(*) FROM (SELECT f.uid AS flight, MONTH(f.dep_date) AS month, t.class, COUNT(t.uid) AS tickets_num FROM ticket t
+JOIN flight f ON (t.flight_id = f.uid) WHERE YEAR(f.dep_date) = ?
+GROUP BY flight, month, t.class) query';
+        $pages = DataBase::getRow($sql, $user_data);
+        if (!$pages) {
+            $pages[0] = 0;
+        }
+        $this->view->render('new_report_view.php', 'base_view.php',
+            ['pages' => ceil($pages[0] / self::$limit), 'data' => $data]);
     }
 
     function action_users_without_tickets()
