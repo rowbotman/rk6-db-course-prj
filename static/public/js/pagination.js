@@ -30,24 +30,47 @@ Array.from(buttons).forEach((btn) => {
             url = url.substring(0, pos);
         }
         console.log( btn.getAttribute('value'));
-        pagination(url, btn.getAttribute('value')).then(
+        const newPage = btn.getAttribute('value');
+        pagination(url, newPage).then(
             (data) => {
+                const currentBtn = document.getElementsByClassName('pagination__elem_current')[0];
+                currentBtn.className = 'pagination__elem';
+                Array.from(buttons).some((btn) => {
+                    if (btn.getAttribute('value') === newPage) {
+                        btn.className = 'pagination__elem pagination__elem_current';
+                        return true;
+                    }
+                });
+
                 console.log(data);
-                data.forEach((rowData) => {
-                    const elem = document.createElement('div');
-                    elem.className = 'report__elem';
-                    elem.innerHTML = rowData;
+                const titleRow = document.createElement('div');
+                titleRow.className = 'report__row';
+                child.appendChild(titleRow);
+                let elem = document.createElement('div');
+                elem.className = 'report__elem report__elem_main';
+                elem.innerHTML = '№';
+                child.appendChild(elem);
+                for (let elemData in data[0]) {
+                    elem = document.createElement('div');
+                    elem.className = 'report__elem report__elem_main';
+                    elem.innerHTML = elemData;
                     child.appendChild(elem);
-                    // console.log(rowData);
-                    // const row = document.createElement('div');
-                    // row.className = 'report__row';
-                    // child.appendChild(row);
-                    // rowData.forEach((elemData) => {
-                    //     const elem = document.createElement('div');
-                    //     elem.className = 'report__elem';
-                    //     elem.innerHTML = elemData;
-                    //     child.appendChild(elem);
-                    // });
+                }
+                data.forEach((rowData, index) => {
+                    const row = document.createElement('div');
+                    row.className = 'report__row';
+                    child.appendChild(row);
+                    elem = document.createElement('div');
+                    elem.className = 'report__elem';
+                    elem.innerHTML = ++index + (newPage - 1) * 10;
+                    child.appendChild(elem);
+                    for (let elemData in rowData) {
+                        const elem = document.createElement('div');
+                        elem.className = 'report__elem';
+                        elem.innerHTML = rowData[elemData];
+                        child.appendChild(elem);
+                        elemData = +elemData;
+                    }
                 });
             }
         );
