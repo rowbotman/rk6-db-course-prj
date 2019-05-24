@@ -4,10 +4,16 @@
   height: 35px;
   text-align: center;
   &__elem {
+    display: block;
     width: 35px;
-    background-color: $primary-color-light;
+    height: 35px;
+    border: 1px solid $muted-color-dark;
+    border-radius: 4px;
+    background-color: $muted-color-light;
     &_current {
-      background-color: $muted-color-light;
+      color: white;
+      background-color: $primary-color-light;
+
     }
   }
 }

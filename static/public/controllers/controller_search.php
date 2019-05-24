@@ -1,12 +1,12 @@
 <?php
-require_once('static/public/models/model_report.php');
+require_once('static/public/models/model_search.php');
 
 class Controller_Search extends Controller
 {
     static private $limit = 10;
     function __construct()
     {
-        $this->model = new ModelReport();
+        $this->model = new ModelSearch();
         $this->view = new View();
     }
 

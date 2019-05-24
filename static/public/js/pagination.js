@@ -21,7 +21,6 @@ Array.from(buttons).forEach((btn) => {
     console.log(btn);
     const handler = () => {
         console.log('event');
-        const table = document.getElementsByClassName('report_main')[0];
         let child = document.getElementsByClassName('report__items')[0];
         child.innerHTML = '';
         let url = window.location.pathname;
