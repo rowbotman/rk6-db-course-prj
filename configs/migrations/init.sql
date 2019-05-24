@@ -59,6 +59,6 @@ SELECT MAX(num) FROM
     GROUP BY t.user_id
 ) subquery;
 
-GRANT ALL   PRIVILEGES ON bonus_program TO 'root'@'localhost';
-GRANT ALL   PRIVILEGES ON bonus_program TO 'bonus'@'localhost';
+GRANT ALL   PRIVILEGES ON bonus_program.* TO 'root'@'localhost';
+GRANT ALL   PRIVILEGES ON bonus_program.* TO 'bonus'@'localhost';
 FLUSH PRIVILEGES;

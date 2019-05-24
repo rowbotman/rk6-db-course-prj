@@ -1,4 +1,4 @@
-#!/home/astronaut/anaconda3/bin/python3
+#!/usr/bin/python3
 
 ############################################
 # File Name : generate2.py
