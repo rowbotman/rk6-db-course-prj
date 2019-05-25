@@ -1,7 +1,20 @@
 <?php
 class ModelSearch extends Model
 {
-    public static $limit = 10;
+    private static $limit;
+    private static $limit_h;
+    private static $limit_l;
+
+    public function __construct($limit = 10, $page_num = 1)
+    {
+        if ($page_num < 0) {
+            $page_num = 1;
+        }
+        self::$limit = $limit;
+        self::$limit_h = $limit * $page_num;
+        self::$limit_l = ($page_num - 1) * $limit;
+    }
+
     public function get_search_list() {
         return array(
             'title' => 'Список доступных запросов',
@@ -48,16 +61,14 @@ class ModelSearch extends Model
         );
     }
 
-    public function get_rich_users($user_data, $page = 1)
+    public function get_rich_users($user_data)
     {
-        $limit_h = $page * self::$limit;
-        $limit_l = ($page - 1) * self::$limit;
         $sql = 'SELECT * FROM profile p 
 JOIN ticket t ON (p.uid = t.user_id)
 WHERE t.price =
 (
     SELECT max(price) FROM ticket WHERE flight_id = :flight_id
-) AND t.flight_id = :flight_id LIMIT '.$limit_l.','.$limit_h.';';
+) AND t.flight_id = :flight_id LIMIT '.self::$limit_l.','.self::$limit_h.';';
         $data = [['' => 'Empty set']];
         if ($user_data) {
             $data = DataBase::paramQueryWithBind($sql, [':flight_id', $user_data, PDO::PARAM_INT, 24]);
@@ -82,13 +93,11 @@ WHERE t.price =
         return ['pages' => ceil($pages[0] / self::$limit), 'data' => $data];
     }
 
-    public function get_booking_from($user_data, $page = 1)
+    public function get_booking_from($user_data)
     { // TODO: add t.class in sql statement
-        $limit_h = $page * self::$limit;
-        $limit_l = ($page - 1) * self::$limit;
         $sql = 'SELECT f.uid AS flight, MONTH(f.dep_date) AS month, t.class, COUNT(t.uid) AS tickets_num FROM ticket t
 JOIN flight f ON (t.flight_id = f.uid) WHERE YEAR(f.dep_date) = ?
-GROUP BY flight, month, t.class ORDER BY tickets_num DESC LIMIT ' . $limit_l . ',' . $limit_h . ';';
+GROUP BY flight, month, t.class ORDER BY tickets_num DESC LIMIT ' . self::$limit_l . ',' . self::$limit_h . ';';
         $data = [['' => 'Empty set']];
         if ($user_data) {
             $data = DataBase::paramQuery($sql, $user_data);
