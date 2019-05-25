@@ -2,7 +2,7 @@
 import ajax from './ajax.js';
 
 const pagination = (path, page) => {
-    const url = `/ajax${path}?page=${page}`
+    const url = `/ajax${path}page=${page}`
     return ajax.doGet({path: url}).then(
         (response) => {
             if (response.status > 499) {
@@ -23,11 +23,10 @@ Array.from(buttons).forEach((btn) => {
         console.log('event');
         let child = document.getElementsByClassName('report__items')[0];
         child.innerHTML = '';
-        let url = window.location.pathname;
+        let url = window.location.pathname + window.location.search;
+        console.log(url);
         const pos = url.indexOf('?');
-        if (pos > 0) {
-            url = url.substring(0, pos);
-        }
+        url += pos > 0 ? '&' : '?';
         console.log( btn.getAttribute('value'));
         const newPage = btn.getAttribute('value');
         pagination(url, newPage).then(

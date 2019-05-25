@@ -2,17 +2,15 @@
 class ModelSearch extends Model
 {
     private static $limit;
-    private static $limit_h;
-    private static $limit_l;
+    private static $page;
 
     public function __construct($limit = 10, $page_num = 1)
     {
-        if ($page_num < 0) {
+        if ($page_num <= 0) {
             $page_num = 1;
         }
         self::$limit = $limit;
-        self::$limit_h = $limit * $page_num;
-        self::$limit_l = ($page_num - 1) * $limit;
+        self::$page = ($page_num - 1) * $limit;
     }
 
     public function get_search_list() {
@@ -61,14 +59,13 @@ class ModelSearch extends Model
         );
     }
 
-    public function get_rich_users($user_data)
+    public function get_rich_users()
     {
+        $user_data = $_GET['var1'];
         $sql = 'SELECT * FROM profile p 
 JOIN ticket t ON (p.uid = t.user_id)
-WHERE t.price =
-(
-    SELECT max(price) FROM ticket WHERE flight_id = :flight_id
-) AND t.flight_id = :flight_id LIMIT '.self::$limit_l.','.self::$limit_h.';';
+WHERE t.price =(SELECT max(price) FROM ticket WHERE flight_id = :flight_id)
+  AND t.flight_id = :flight_id LIMIT '.self::$page.','.self::$limit.';';
         $data = [['' => 'Empty set']];
         if ($user_data) {
             $data = DataBase::paramQueryWithBind($sql, [':flight_id', $user_data, PDO::PARAM_INT, 24]);
@@ -93,11 +90,13 @@ WHERE t.price =
         return ['pages' => ceil($pages[0] / self::$limit), 'data' => $data];
     }
 
-    public function get_booking_from($user_data)
+    public function get_booking_from()
     { // TODO: add t.class in sql statement
+        $user_data = [$_GET['var1']];
+
         $sql = 'SELECT f.uid AS flight, MONTH(f.dep_date) AS month, t.class, COUNT(t.uid) AS tickets_num FROM ticket t
 JOIN flight f ON (t.flight_id = f.uid) WHERE YEAR(f.dep_date) = ?
-GROUP BY flight, month, t.class ORDER BY tickets_num DESC LIMIT ' . self::$limit_l . ',' . self::$limit_h . ';';
+GROUP BY flight, month, t.class ORDER BY tickets_num DESC LIMIT ' . self::$page . ',' . self::$limit . ';';
         $data = [['' => 'Empty set']];
         if ($user_data) {
             $data = DataBase::paramQuery($sql, $user_data);
@@ -105,13 +104,13 @@ GROUP BY flight, month, t.class ORDER BY tickets_num DESC LIMIT ' . self::$limit
                 $data = [['' => 'Empty set']];
             }
         }
-        $sql = 'SELECT COUNT(*) FROM (SELECT f.uid AS flight, MONTH(f.dep_date) AS month, t.class, COUNT(t.uid) AS tickets_num FROM ticket t
-JOIN flight f ON (t.flight_id = f.uid) WHERE YEAR(f.dep_date) = ?
-GROUP BY flight, month, t.class) query';
-        $pages = DataBase::getRow($sql, $user_data);
-        if (!$pages) {
-            $pages[0] = 0;
-        }
-        return ['pages' => ceil($pages[0] / self::$limit), 'data' => $data];
+//        $sql = 'SELECT COUNT(*) FROM (SELECT f.uid AS flight, MONTH(f.dep_date) AS month, t.class, COUNT(t.uid) AS tickets_num FROM ticket t
+//JOIN flight f ON (t.flight_id = f.uid) WHERE YEAR(f.dep_date) = ?
+//GROUP BY flight, month, t.class) query';
+//        $pages = DataBase::getRow($sql, $user_data);
+//        if (!$pages) {
+//            $pages[0] = 0;
+//        }
+        return $data;
     }
 }

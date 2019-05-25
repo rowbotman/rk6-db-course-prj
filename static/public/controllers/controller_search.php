@@ -6,7 +6,7 @@ class Controller_Search extends Controller
     static private $limit = 10;
     function __construct()
     {
-        $this->model = new ModelSearch();
+        $this->model = new ModelSearch(10, 0);
         $this->view = new View();
     }
 
@@ -34,14 +34,10 @@ WHERE t.price =
         $this->view->render('new_report_view.php', 'base_view.php', $data);
     }
     function action_booking_from() { // TODO: add t.class in sql statement
-        $limit_h = array_key_exists('page', $_GET) ? $_GET['page'] * self::$limit : self::$limit;
-        $limit_l = ($limit_h / self::$limit - 1) * self::$limit;
-        $sql = 'SELECT f.uid AS flight, MONTH(f.dep_date) AS month, t.class, COUNT(t.uid) AS tickets_num FROM ticket t
-JOIN flight f ON (t.flight_id = f.uid) WHERE YEAR(f.dep_date) = ?
-GROUP BY flight, month, t.class ORDER BY tickets_num DESC LIMIT '.$limit_l.','.$limit_h.';';
         $user_data = [$_GET['var1']];
+        $data = [['' => 'Empty set']];
         if ($user_data) {
-            $data = DataBase::paramQuery($sql, $user_data);
+            $data = $this->model->get_booking_from();
             if (!$data) {
                 $data = [['' => 'Empty set']];
             }

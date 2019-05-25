@@ -13,7 +13,7 @@
  * Get page by get-attribute
  * @param string $model
  * @param string $action
-S * @param int $page
+ * @param int $page
  */
 function get_page($model = 'search', $action = 'index', $page = 1)
 {
@@ -43,7 +43,7 @@ function get_page($model = 'search', $action = 'index', $page = 1)
 
     if (method_exists($getter, $action_name)) {
         // вызываем действие контроллера
-        $data = $getter->$action_name($page);
+        $data = $getter->$action_name();
         $json = json_encode($data);
         echo $json;
     } else {
