@@ -125,4 +125,32 @@ GROUP BY t.flight_id, f.dep_date ORDER BY sum DESC LIMIT ' . self::$page . ',' .
         }
         return $data;
     }
+
+    public function get_users_without_tickets()
+    {
+        $sql = 'SELECT p.* FROM profile p LEFT JOIN ticket t ON (t.user_id = p.uid) WHERE t.user_id IS NULL
+        LIMIT ' . self::$page . ',' . self::$limit . ';';
+        $data = DataBase::query($sql);
+        if (!$data) {
+            $data = [['' => 'Empty set']];
+        }
+        return $data;
+    }
+
+    public function get_without_tickets_in()
+    {
+        $sql = 'SELECT distinct p.uid, p.firstName, p.lastName, p.votes 
+        FROM profile p JOIN ticket t ON (p.uid = t.user_id) JOIN flight f ON (t.flight_id = f.uid)
+        WHERE YEAR(f.dep_date) <> ? AND MONTH(f.dep_date) <> ?
+        LIMIT ' . self::$page . ',' . self::$limit . ';';
+        $data = [['' => 'Empty set']];
+        $user_data = [$_GET['var2'], $_GET['var1']];
+        if ($_GET['var1'] && $_GET['var2']) {
+            $data = DataBase::paramQuery($sql, $user_data);
+            if (!$data) {
+                $data = [['' => 'Empty set']];
+            }
+        }
+        return $data;
+    }
 }
