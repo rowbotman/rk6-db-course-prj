@@ -1,6 +1,18 @@
 <?php
-class ModelReport extends Model
+class ModelOldreports extends Model
 {
+    private static $limit;
+    private static $page;
+
+    public function __construct($limit = 10, $page_num = 1)
+    {
+        if ($page_num <= 0) {
+            $page_num = 1;
+        }
+        self::$limit = $limit;
+        self::$page = ($page_num - 1) * $limit;
+    }
+
     public function action()
     {
         return array(
@@ -96,5 +108,23 @@ FROM airport_rating ORDER BY start_date, end_date;';
                     'data_get' => false,
                 )),
         );
+    }
+
+    public function get_airport_rating()
+    {
+        $sql = 'SELECT r.airport, r.tickets_out, r.tickets_in,
+        r.tickets_out + r.tickets_in AS sum FROM airport_rating r
+        WHERE r.hash_group = ? ORDER BY sum DESC, r.tickets_in DESC, r.tickets_out DESC
+        LIMIT ' . self::$page . ',' . self::$limit . ';';
+        $data = [['' => 'Empty set']];
+        if ($_GET['var1'] && $_GET['var2']) {
+            $sha_str = $_GET['var1'] . ' 00:00:00' . $_GET['var2'] . ' 00:00:00';
+            $sha_data = sha1($sha_str);
+            $data = DataBase::paramQuery($sql, $sha_data);
+            if (!$data) {
+                $data = [['' => 'Empty set']];
+            }
+        }
+        return $data;
     }
 }

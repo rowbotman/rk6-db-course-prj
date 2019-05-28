@@ -2,7 +2,7 @@
 import ajax from './ajax.js';
 
 const pagination = (path, page) => {
-    const url = `/ajax${path}page=${page}`
+    const url = `/ajax${path}page=${page}`;
     return ajax.doGet({path: url}).then(
         (response) => {
             if (response.status > 499) {
@@ -18,16 +18,12 @@ const pagination = (path, page) => {
 
 const buttons = document.getElementsByClassName('pagination__elem');
 Array.from(buttons).forEach((btn) => {
-    console.log(btn);
     const handler = () => {
-        console.log('event');
         let child = document.getElementsByClassName('report__items')[0];
         child.innerHTML = '';
         let url = window.location.pathname + window.location.search;
-        console.log(url);
         const pos = url.indexOf('?');
         url += pos > 0 ? '&' : '?';
-        console.log( btn.getAttribute('value'));
         const newPage = btn.getAttribute('value');
         pagination(url, newPage).then(
             (data) => {
@@ -40,7 +36,6 @@ Array.from(buttons).forEach((btn) => {
                     }
                 });
 
-                console.log(data);
                 const titleRow = document.createElement('div');
                 titleRow.className = 'report__row';
                 child.appendChild(titleRow);
