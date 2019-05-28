@@ -1,4 +1,4 @@
-#!/home/astronaut/anaconda3/bin/python3
+#!/usr/bin/python3.6
 
 ############################################
 # File Name : generate2.py
@@ -70,7 +70,7 @@ def insertIntoTickets(value):
         insertion.append(value[i]['class'])
         insertion.append(value[i]['price'])
         req = tuple(insertion)
-        print(req)
+        #print(req)
         mycursor.execute(sql, req);
         mydb.commit()
 
@@ -86,7 +86,7 @@ def insertIntoFlight(value):
         insertion.append(value[i]['arr_airport'])
         insertion.append(randomDate("2010/01/01 01:01:01", "2018/01/01 01:01:01", random.random()))#initTickets(int(value[i]['dep_date'])))
         req = tuple(insertion)
-        print(req)
+        #print(req)
         mycursor.execute(sql, req);
         mydb.commit()
 
@@ -108,17 +108,17 @@ def insertIntoDetail(value):
     print(mycursor.rowcount, "was inserted.")
 
 
-with open(path[0], 'r') as f:
+with open(path[0], 'r', encoding="utf-8") as f:
     data = json.loads(f.read())
     insertIntoProfile(data)
-with open(path[2], 'r') as f:
+with open(path[2], 'r', encoding="utf-8") as f:
     data = json.loads(f.read())
     insertIntoFlight(data)
-with open(path[1], 'r') as f:
+with open(path[1], 'r', encoding="utf-8") as f:
     data = json.loads(f.read())
     insertIntoTickets(data)
 
-with open(path[3], 'r') as f:
+with open(path[3], 'r', encoding="utf-8") as f:
     data = json.loads(f.read())
     insertIntoDetail(data)
 

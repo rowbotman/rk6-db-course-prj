@@ -1,10 +1,15 @@
 <?php
-require_once('static/public/models/model_report.php');
+require_once('static/public/models/model_oldreports.php');
 
 class Controller_OldReports extends Controller {
+    static private $limit = 10;
+
+    /**
+     * Controller_OldReports constructor.
+     */
     public function __construct()
     {
-        $this->model = new ModelReport();
+        $this->model = new ModelOldreports(10, 0);
         $this->view = new View();
     }
 
@@ -16,17 +21,19 @@ class Controller_OldReports extends Controller {
 
     public function action_airport_rating()
     {
-        $sql = 'SELECT r.airport, r.tickets_out, r.tickets_in, r.tickets_out + r.tickets_in AS sum FROM airport_rating r
-WHERE r.hash_group = ? ORDER BY sum DESC, r.tickets_in DESC, r.tickets_out DESC;';
+        $sql = 'SELECT COUNT(*) AS count FROM airport_rating r WHERE r.hash_group = ?';
         $data = [['' => 'Empty set']];
+        $pages = array(array('count'=> array(0)));
         if ($_GET['var1'] && $_GET['var2']) {
             $sha_str = $_GET['var1'] . ' 00:00:00' . $_GET['var2'] . ' 00:00:00';
             $user_data = sha1($sha_str);
-            $data = DataBase::paramQuery($sql, $user_data);
-            if (!$data) {
-                $data = [['' => 'Empty set']];
+            $data = $this->model->get_airport_rating();
+            $pages = DataBase::paramQuery($sql, $user_data);
+            if (!$pages[0]['count']) {
+                $pages[0]['count'] = 0;
             }
         }
-        $this->view->render('new_report_view.php', 'base_view.php', $data);
+        $this->view->render('new_report_view.php', 'base_view.php',
+            ['pages' => ceil($pages[0]['count'] / self::$limit), 'data' => $data]);
     }
 }
