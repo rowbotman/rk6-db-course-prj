@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="theme-color" content="#fb6a06">
+    <meta name="theme-color" content="#0d47a1">
     <title>Flight bonus program</title>
     <link rel="shortcut icon" href="../../../favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/static/css/style.css">
