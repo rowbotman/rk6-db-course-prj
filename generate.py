@@ -39,8 +39,6 @@ mydb = mysql.connector.connect(
 )
 mycursor = mydb.cursor()
 def insertIntoProfile(value):
-    #val = json.loads(value)
-    #print(val[0][0])
     sql = "INSERT INTO profile (firstName, lastName, votes) VALUES (%s, %s, %s)"
     for i in range(100):
         insertion = []
@@ -50,18 +48,14 @@ def insertIntoProfile(value):
         req = tuple(insertion)
         mycursor.execute(sql, req);
         mydb.commit()
-   # mycursor.executemany(sql, value)
     print(mycursor.rowcount, "was inserted.")
 
 def initTickets(value):
     ts = int(value)
-    # if you encounter a "year is out of range" error the timestamp
-    # may be in milliseconds, try `ts /= 1000` in that case
     val = datetime.utcfromtimestamp(ts).strftime('%Y-%m-%d %H-%M-%S')
     return val
 
 def insertIntoTickets(value):
-    #    val = json.loads(ticketsJson)
     sql = "INSERT INTO ticket (uid, user_id, flight_id, class, price) VALUES (default, %s, %s, %s, %s)"
     for i in range(100):
         insertion = []
@@ -70,30 +64,25 @@ def insertIntoTickets(value):
         insertion.append(value[i]['class'])
         insertion.append(value[i]['price'])
         req = tuple(insertion)
-        #print(req)
         mycursor.execute(sql, req);
         mydb.commit()
 
     print(mycursor.rowcount, "was inserted.")
 
 def insertIntoFlight(value):
-#    val = json.loads(flightJson)
     sql = "INSERT INTO flight (dep_airport, arr_airport, dep_date) VALUES (%s, %s, %s)"
     for i in range(100):
         insertion = []
-#        insertion.append(0)
         insertion.append(value[i]['dep_airport'])
         insertion.append(value[i]['arr_airport'])
         insertion.append(randomDate("2010/01/01 01:01:01", "2018/01/01 01:01:01", random.random()))#initTickets(int(value[i]['dep_date'])))
         req = tuple(insertion)
-        #print(req)
         mycursor.execute(sql, req);
         mydb.commit()
 
     print(mycursor.rowcount, "was inserted.")
 
 def insertIntoDetail(value):
-#    val = json.loads(detailJson)
     sql = "INSERT INTO detail (profile_id, ticket_id, cur_value, bonus_date) VALUES (%s, %s, %s, %s)"
     for i in range(100):
         insertion = []
@@ -106,7 +95,6 @@ def insertIntoDetail(value):
         mycursor.execute(sql, req);
         mydb.commit()
     print(mycursor.rowcount, "was inserted.")
-
 
 with open(path[0], 'r', encoding="utf-8") as f:
     data = json.loads(f.read())

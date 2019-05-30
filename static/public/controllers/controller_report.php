@@ -1,5 +1,6 @@
 <?php
 require_once('static/public/models/model_oldreports.php');
+
 class Controller_Report extends Controller
 {
 
