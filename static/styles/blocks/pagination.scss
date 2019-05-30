@@ -1,0 +1,27 @@
+@import "../modules/variables";
+.pagination {
+  display: flex;
+  height: 35px;
+  text-align: center;
+  &__elem {
+    display: block;
+    width: auto;
+    height: 35px;
+    border: 1px solid $muted-color-dark;
+    border-radius: 4px;
+    background-color: $muted-color-light;
+    &_current {
+      color: white;
+      background-color: $primary-color-light;
+    }
+    &_extra {
+      background-color: $ok-color;
+    }
+  }
+  &__counter {
+    width: auto;
+    height: 35px;
+    border: 1px solid $muted-color-dark;
+    border-radius: 4px;
+  }
+}

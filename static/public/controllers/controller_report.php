@@ -1,10 +1,12 @@
 <?php
+require_once('static/public/models/model_oldreports.php');
+
 class Controller_Report extends Controller
 {
 
     function __construct()
     {
-        $this->model = new ModelReport();
+        $this->model = new ModelOldreports();
         $this->view = new View();
     }
 
