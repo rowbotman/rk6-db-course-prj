@@ -15,6 +15,7 @@ class DataBase
             self::$dbh = new PDO(self::$dsn, self::$user, self::$password, array(
                 PDO::ATTR_PERSISTENT => true
             ));
+            self::$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
         return self::$dbh;
 //        } catch (PDOException $e) {
@@ -32,7 +33,7 @@ class DataBase
     public static function paramQuery($query, $params = array())
     {
         $stmt = self::connection()->prepare($query);
-        $stmt->execute((array)$params);
+        $stmt->execute($params);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -92,5 +93,11 @@ class DataBase
             return -1;
         }
         return 1;
+    }
+
+    public static function insertQuery($query, $params = array())
+    {
+        $stmt = self::connection()->prepare($query);
+        $stmt->execute($params);
     }
 }

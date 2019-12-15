@@ -5,19 +5,29 @@ class ModelUser extends Model
     private static $user;
     private static $salt = 'salt';
     private static $hash = '';
+
     public function __construct($login = '', $pass = '')
     {
-        self::$hash = sha1($login . self::$salt . $pass);
+        if ($pass == '') {
+            self::$hash = $login;
+        } else {
+            echo $login . self::$salt . $pass;
+            self::$hash = sha1($login . self::$salt . $pass);
+            echo self::$hash;
+        }
     }
 
-    public function get_instance() {
-        $sql_statement = 'SELECT firstName, role FROM profile WHERE pass = ? ;';
+    public function get_instance()
+    {
+        $sql_statement = 'SELECT uid, firstName, role, pass FROM profile WHERE pass = ? ;';
+        echo $sql_statement . self::$hash;
         $data = DataBase::getRow($sql_statement, self::$hash);
         if ($data) {
             self::$user = array(
                 'name' => $data['name'],
                 'role' => $data['role'],
-                'hash' => sha1($data['hash']));
+                'uid' => $data['uid'],
+                'hash' => $data['pass']);
         } else {
             self::$user = null;
         }
@@ -28,13 +38,13 @@ class ModelUser extends Model
     {
         // TODO: check is user auth earlier
         $hash = sha1($login . self::$salt . $pass);
-        $sql_statement = 'SELECT firstName, role FROM profile WHERE pass = ? ;';
+        $sql_statement = 'SELECT firstName, role, pass FROM profile WHERE pass = ? ;';
         $data = DataBase::getRow($sql_statement, $hash);
         if ($data) {
             self::$user = array(
-                'name' => $data['name'],
+                'name' => $data['firstName'],
                 'role' => $data['role'],
-                'hash' => sha1($data['hash']));
+                'hash' => $data['pass']);
         }
     }
 
@@ -48,6 +58,30 @@ class ModelUser extends Model
     {
         $sql_statement = 'SELECT firstName, role FROM profile WHERE pass = ? ;';
         $data = DataBase::getRow($sql_statement, $hash);
+    }
+
+    public function user_by_session($session_hash)
+    {
+        $sql_statement = 'SELECT uid FROM sessions WHERE hash = ? ;';
+        echo $sql_statement . $session_hash;
+        $data = DataBase::getRow($sql_statement, $session_hash);
+        if ($data) {
+            $sql_statement = 'SELECT uid, firstName, role, pass FROM profile WHERE uid = ? ;';
+            $data = DataBase::getRow($sql_statement, $data['uid']);
+            self::$user = array(
+                'name' => $data['firstName'],
+                'role' => $data['role'],
+                'uid' => $data['uid'],
+                'hash' => $data['pass']);
+        } else {
+            self::$user = null;
+        }
+        return self::$user;
+    }
+
+    public static function destroy_session($session_hash)
+    {
+        DataBase::insertQuery('DELETE FROM sessions WHERE hash = ?', [$session_hash]);
     }
 
     public static function security()

@@ -18,10 +18,10 @@
             <a class="header__title" href="/">COURSACHEIT</a>
         </div>
         <?php
-        if (!isset($is_auth)) {
-            echo '<a class="header__exit" href="/auth">Login</a>';
+        if (!isset($data['auth']) or $data['auth'] == false) {
+            echo '<a class="header__exit" href="/auth?login=true">Login</a>';
         } else {
-            echo '<a class="header__exit" href="/auth">'.$user['name'].'</a>';
+            echo '<a class="header__exit" href="/auth?logout=true">' . $data['user']['name'] . '</a>';
         }
         ?>
     </div>

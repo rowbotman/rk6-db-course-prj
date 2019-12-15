@@ -39,13 +39,12 @@ CREATE TABLE IF NOT EXISTS ticket
     price     INT NOT NULL DEFAULT 0,
 
     FOREIGN KEY (user_id) REFERENCES profile (uid),
-    FOREIGN KEY (flight_id) REFERENCES flight (uid),
-    FOREIGN KEY (uid) REFERENCES detail (uid)
+    FOREIGN KEY (flight_id) REFERENCES flight (uid)
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS detail
 (
-    uid        INT       NOT NULL,
+    uid        INT       NOT NULL AUTO_INCREMENT PRIMARY KEY,
     profile_id INT       NOT NULL,
     ticket_id  INT       NOT NULL,
     cur_value  BIGINT    NOT NULL DEFAULT 0,
@@ -57,9 +56,9 @@ CREATE TABLE IF NOT EXISTS detail
 
 CREATE TABLE IF NOT EXISTS sessions
 (
-    id         INT       NOT NULL,
+    id         INT       NOT NULL AUTO_INCREMENT PRIMARY KEY,
     uid        INT       NOT NULL,
-    user_agent INT                DEFAULT NULL,
+    user_agent VARCHAR(256)       DEFAULT NULL,
     ip         INT(11) UNSIGNED   DEFAULT NULL,
     hash       VARCHAR(64)        DEFAULT NULL,
     created    TIMESTAMP NOT NULL DEFAULT current_timestamp,
@@ -71,7 +70,7 @@ CREATE TABLE IF NOT EXISTS logs
 (
     id         INT       NOT NULL,
     uid        INT       NOT NULL,
-    user_agent INT                DEFAULT NULL,
+    user_agent VARCHAR(256)       DEFAULT NULL,
     ip         INT(11) UNSIGNED   DEFAULT NULL,
     created    TIMESTAMP NOT NULL DEFAULT current_timestamp,
 
