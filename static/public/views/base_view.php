@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/css/login.css">
     <link rel="stylesheet" href="/static/css/icons.css">
+    <link rel="stylesheet" href="/static/css/common.css">
+    <link rel="stylesheet" href="/static/css/register.css">
 </head>
 <body>
 <div id="application">
