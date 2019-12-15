@@ -35,7 +35,7 @@ class ModelOldreports extends Model
                 array(
                     'action' => 'airport_rating',
                     'row' => 'Рейтинг аэропортов по популярности',
-                    'data' =>  array('month', 'year', 'month', 'year'),
+                    'data' =>  array('month', 'year'),
                     'data_get' => false,
                 )),
         );

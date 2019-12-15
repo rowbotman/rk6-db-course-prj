@@ -5,6 +5,7 @@ class Controller_Report extends Controller
 
     function __construct()
     {
+        Controller::__construct();
         $this->model = new ModelOldreports();
         $this->view = new View();
     }
@@ -23,12 +24,16 @@ class Controller_Report extends Controller
     function action_airport_rating() {
         $is_call = 'is_rating_exist'; // TODO add sql variables
         $data = -1;
-        if (((int)$_GET['var1']) && ((int)$_GET['var3'])) {
-            $sha_str = $_GET['var2'].'-'.$_GET['var1'].'-01 00:00:00'.$_GET['var4'].'-'.$_GET['var3'].'-01 00:00:00';
+        if ((int)$_GET['var1']) {
+            $month = (int)$_GET['var1'];
+            $month = $month == 12 ? 1 : ++$month;
+            $year = (int)$_GET['var2'];
+            $year = $month == 1 ? ++$year : $year;
+            $sha_str = $_GET['var2'].'-'.$_GET['var1'].'-01 00:00:00'.$year.'-'.$month.'-01 00:00:00';
             $sha_res = sha1($sha_str);
             $check_sql = 'SELECT * FROM airport_rating WHERE hash_group=\''.$sha_res.'\';'; // TODO: исправить на переменные sql
             $user_data = [$_GET['var2'].'-'.$_GET['var1'].'-01 00:00:00',
-                          $_GET['var4'].'-'.$_GET['var3'].'-01 00:00:00'];
+                          $year.'-'.$month.'-01 00:00:00'];
             $sql = 'CALL get_airport_rating(?, ?)';
             $data = DataBase::procedureCallWithParam($sql, $check_sql, $user_data);
         }

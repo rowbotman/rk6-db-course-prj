@@ -1,5 +1,9 @@
 <?php
 switch ($data) {
+    case -1: {
+        echo '<h1>Данных за этот период нет</h1>';
+        break;
+    }
     case 1: {
         echo '<h1>Отчет успешно создан</h1>';
         break;

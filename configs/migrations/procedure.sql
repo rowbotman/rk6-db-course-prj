@@ -44,7 +44,6 @@ BEGIN
         GROUP BY f.arr_airport;
 
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
-
     OPEN cur1;
     WHILE done = 0 DO
         FETCH cur1 INTO hash_id_var, hash_group_var, airport_var, tickets_var;
