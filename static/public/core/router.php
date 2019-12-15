@@ -9,6 +9,7 @@ class Router
      */
     static function start()
     {
+        session_start();
         // контроллер и действие по умолчанию
         $controller_name = 'Menu';
         $action_name = 'index';

@@ -1,4 +1,5 @@
 <?php
+require_once ('static/public/security.php');
 
 class ModelUser extends Model
 {
@@ -86,25 +87,30 @@ class ModelUser extends Model
 
     public static function security()
     {
-        if ($_SESSION['security_check'] == 0) {
-            $user_id = $_SESSION['user_id'];
-            $sql_statement = 'SELECT COUNT(*) FROM sessions
+        if (isset($_SESSION['security_check'])) {
+            if ($_SESSION['security_check'] == 0) {
+                $user_id = $_SESSION['user_id'];
+                $sql_statement = 'SELECT COUNT(*) FROM sessions
                     WHERE uid = ? AND ip = ? AND user_agent = ? AND hash = ? ;';
-            $user_data = [
-                $user_id, $_SERVER['REMOTE_ADDR'],
-                html_escape($_SERVER['HTTP_USER_AGENT']),
-                preg_replace('/[^0-9a-f]/', '', $_COOKIE['auth'])
-            ];
+                $user_data = [
+                    $user_id, ip2long($_SERVER['REMOTE_ADDR']),
+                    html_escape($_SERVER['HTTP_USER_AGENT']),
+                    preg_replace('/[^0-9a-f]/', '', $_COOKIE['auth'])
+                ];
 
-            // TODO: check it
-            $n = (int)DataBase::getRow($sql_statement, $user_data);
+                // TODO: check it
+                $n = (int)DataBase::getRow($sql_statement, $user_data);
 
-            if ($n == 0) {
-                header("Location: /auth/login?act=logout");
-                exit();
-            } else {
-                $_SESSION['security_check'] = 1;
+                if ($n == 0) {
+                    header("Location: /auth/login?act=logout");
+                    exit();
+                } else {
+                    $_SESSION['security_check'] = 1;
+                }
             }
+        } else {
+            header("Location: /auth?login=true");
+            exit();
         }
     }
 }

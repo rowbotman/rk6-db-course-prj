@@ -36,6 +36,7 @@ class Controller_Auth extends Controller
                 session_start();
                 $_SESSION['last_access'] = time();
                 $_SESSION['security_check'] = 1;
+                $_SESSION['user_id'] = $user['uid'];
                 $_SESSION['name'] = $user['name'];
                 $hash = md5($user['hash'] . $_SERVER['HTTP_USER_AGENT']);
                 setcookie('auth', $hash, time() + 2 * 24 * 60 * 60, '/');
@@ -43,7 +44,7 @@ class Controller_Auth extends Controller
                 $sql_statement = 'INSERT INTO `sessions`(uid, user_agent, ip, hash, created) VALUES (?, ?, ?, ?, ?);';
                 DataBase::insertQuery($sql_statement, [
                     $user['uid'],
-                    $_SERVER['HTTP_USER_AGENT'],
+                    html_escape($_SERVER['HTTP_USER_AGENT']),
                     ip2long($_SERVER['REMOTE_ADDR']),
                     $hash,
                     date("Y-m-d h:i:s")]);

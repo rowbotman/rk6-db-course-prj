@@ -5,6 +5,7 @@ class Controller_Menu extends Controller
 {
     function action_index()
     {
+        ModelUser::security();
         $user = null;
         $auth = false;
         if (isset($_COOKIE['auth'])) {
