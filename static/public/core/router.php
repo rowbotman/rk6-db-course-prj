@@ -2,6 +2,15 @@
 
 class Router
 {
+    private static $permission_map = [
+        '' => [0, 1, 2, 3],
+        'change' => [2, 3],
+        'analytics' => [1, 3],
+        'search' => [2, 3],
+        'report' => [2, 3],
+        'oldreports' => [2, 3],
+        'exit' => [0, 1, 2, 3]
+    ];
     public static $prev_url = '/';
 
     /**
@@ -19,6 +28,28 @@ class Router
         $is_auth = false;
 
         if ($routes[1] != 'ajax') {
+            if (isset($_SESSION['role']) and $routes[1] != 'auth' ) {
+                $user_role = (int)$_SESSION['role'];
+                $ok = false;
+                foreach (self::$permission_map as $item => $value) {
+                    if ($routes[1] == $item) {
+                        foreach ($value as $role)  {
+                            if ($user_role == $role) {
+                                $ok = true;
+                                break;
+                            }
+                        }
+                        if ($ok) {
+                            break;
+                        }
+                    }
+                }
+                if (!$ok) {
+                    (new Router)->ErrorPage403();
+                    echo '403 Forbidden';
+                    exit();
+                }
+            }
             // получаем имя контроллера
             if (!empty($routes[1])) {
                 $controller_name = $routes[1];
@@ -82,5 +113,13 @@ class Router
         header('HTTP/1.1 404 Not Found');
         header("Status: 404 Not Found");
         header('Location:' . $host . '404');
+    }
+
+    function ErrorPage403()
+    {
+        $host = 'http://' . $_SERVER['HTTP_HOST'] . '/';
+        header('HTTP/1.1 403 Forbidden');
+        header("Status: 403 Forbidden");
+        header('Location:' . $host . '403');
     }
 }

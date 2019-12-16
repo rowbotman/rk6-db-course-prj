@@ -38,6 +38,7 @@ class Controller_Auth extends Controller
                 $_SESSION['security_check'] = 1;
                 $_SESSION['user_id'] = $user['uid'];
                 $_SESSION['name'] = $user['name'];
+                $_SESSION['role'] = $user['role'];
                 $hash = md5($user['hash'] . $_SERVER['HTTP_USER_AGENT']);
                 setcookie('auth', $hash, time() + 2 * 24 * 60 * 60, '/');
                 echo 'here';

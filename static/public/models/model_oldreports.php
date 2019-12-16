@@ -120,7 +120,7 @@ FROM airport_rating ORDER BY start_date, end_date;';
         if ($_GET['var1'] && $_GET['var2']) {
             $sha_str = $_GET['var1'] . ' 00:00:00' . $_GET['var2'] . ' 00:00:00';
             $sha_data = sha1($sha_str);
-            $data = DataBase::paramQuery($sql, $sha_data);
+            $data = DataBase::paramQuery($sql, [$sha_data]);
             if (!$data) {
                 $data = [['' => 'Empty set']];
             }

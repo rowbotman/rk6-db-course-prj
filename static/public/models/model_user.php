@@ -64,7 +64,6 @@ class ModelUser extends Model
     public function user_by_session($session_hash)
     {
         $sql_statement = 'SELECT uid FROM sessions WHERE hash = ? ;';
-        echo $sql_statement . $session_hash;
         $data = DataBase::getRow($sql_statement, $session_hash);
         if ($data) {
             $sql_statement = 'SELECT uid, firstName, role, pass FROM profile WHERE uid = ? ;';

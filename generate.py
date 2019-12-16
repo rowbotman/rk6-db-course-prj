@@ -44,7 +44,7 @@ def insertIntoProfile(value):
     #print(val[0][0])
     default_pass = 'passwd'
     salt = 'salt'
-    default_pass += salt
+    default_pass = salt + default_pass
     sql = "INSERT INTO profile (firstName, lastName, votes, pass, role) VALUES (%s, %s, %s, %s, %s)"
     for i in range(100):
         insertion = []

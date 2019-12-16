@@ -28,7 +28,7 @@ class Controller_OldReports extends Controller {
             $sha_str = $_GET['var1'] . ' 00:00:00' . $_GET['var2'] . ' 00:00:00';
             $user_data = sha1($sha_str);
             $data = $this->model->get_airport_rating();
-            $pages = DataBase::paramQuery($sql, $user_data);
+            $pages = DataBase::paramQuery($sql, [$user_data]);
             if (!$pages[0]['count']) {
                 $pages[0]['count'] = 0;
             }
