@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/static/css/icons.css">
     <link rel="stylesheet" href="/static/css/common.css">
     <link rel="stylesheet" href="/static/css/register.css">
+    <link rel="stylesheet" href="/static/css/update.css">
 </head>
 <body>
 <div id="application">

@@ -36,7 +36,7 @@
                 <button type="submit" class="btn size_xlarge btn-red btn-border">
                     <div class="btn-font color_white font_size-16 btn-font-pos">Поиск</div>
                 </button>
-                <button class="btn size_large btn-gray btn-border" onclick="window.history.back()">
+                <button type="reset" value="None" class="btn size_large btn-gray btn-border" onclick="window.history.back()">
                     <div class="btn-font color_dark font_size-16 btn-font-pos">Отменить</div>
                 </button>
             </div>
