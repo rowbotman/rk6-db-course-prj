@@ -8,7 +8,21 @@ const getButton = (type) => {
 };
 
 const remove = (id) => {
-    const url = `/ajax/update/delete?ticket_id=${id}`;
+    const url = encodeURI(`/ajax/update/delete?ticket_id=${id}`);
+    return ajax.doGet({path: url}).then(
+        (response) => {
+            if (response.status > 499) {
+                throw new Error('Server error');
+            }
+            return response.json().then((data) => data);
+        },
+        (error) => {
+            throw new Error(error);
+        });
+};
+
+const update = (id, cur_value, ticket_id, bonus_date) => {
+    const url = `/ajax/update/update?id=${id}&cur_value=${cur_value}&ticket_id=${ticket_id}&bonus_date=${bonus_date}`;
     return ajax.doGet({path: url}).then(
         (response) => {
             if (response.status > 499) {
@@ -30,6 +44,7 @@ const drawRow = (event) => {
     row.setAttribute('id', event.currentTarget.id);
     const itemsNum = event.currentTarget.childNodes.length - 3;
     console.log(itemsNum);
+    let send = [];
     event.currentTarget.childNodes.forEach((node, i) => {
         console.log(node);
         console.log('index', i);
@@ -42,12 +57,17 @@ const drawRow = (event) => {
             block.textContent = node.textContent;
         } else {
             block.textContent = node.firstChild.value;
+            send.push(node.firstChild.value);
         }
         // } else {
         //     node.textContent = '';
         // }
         console.log('loop length of form: ', row.childElementCount);
         row.appendChild(block);
+    });
+    update(event.currentTarget.id, send[0], send[1], send[2]).then(
+        (data) => {
+            console.log(data);
     });
     let parent = event.currentTarget.parentNode;
     console.log(parent);
