@@ -11,17 +11,24 @@
                 <label>
                     <input type="text" class="input-form input-form_size" name="firstName" placeholder="Имя" required>
                 </label>
-                <div class="invalid-input">Заполните обязательное поле</div>
+                <?php
+                // todo: rewrite it
+                if (isset($data['validate'])) {
+                    echo '<div class="invalid-input">Заполните обязательное поле</div>';
+                }
+                ?>
             </div>
-            <div class="form-label-group">
+            <div class="form-label-group required-area">
                 <label>
                     <input type="text" class="input-form input-form_size" name="lastName" placeholder="Фамилия"
                            required>
                 </label>
-                <div class="invalid-input">Заполните обязательное поле</div>
+                <?php
+                if (isset($data['validate'])) {
+                    echo '<div class="invalid-input">Заполните обязательное поле</div>';
+                }
+                ?>
             </div>
-
-
         </div>
         <hr class="top-line">
         <div class="input-container">

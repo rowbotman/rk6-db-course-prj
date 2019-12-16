@@ -13,6 +13,14 @@ class ModelSearch extends Model
         self::$page = ($page_num - 1) * $limit;
     }
 
+    public function get_update_list() {
+        return array(
+            'title' => 'Перелеты пользователя',
+            'url' => 'change/confirm',
+            'rows' => array()
+        );
+    }
+
     public function get_search_list() {
         return array(
             'title' => 'Список доступных запросов',

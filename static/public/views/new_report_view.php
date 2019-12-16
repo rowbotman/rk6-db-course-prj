@@ -34,20 +34,7 @@
 </div>
 
 <?php
-echo '<div class="pagination">';
-$flag = true;
-$page_num = $data['pages'];
-if ($data['pages'] > 1) {
-    echo '<button class="pagination__elem pagination__elem_extra" value="1">Начало</button>';
-    echo '<button class="pagination__elem" value="-1">Назад</button>';
-    echo '<button class="pagination__counter pagination__elem_current" value="1">1</button>';
-//    echo '<button class="pagination__elem" value="3">...</button>';
-//    echo '<button class="pagination__elem" value="'.($page_num - 1).'">'.($page_num - 1).'</button>';
-    echo '<button class="pagination__elem" value="1">Вперед</button>';
-    echo '<button class="pagination__elem pagination__elem_extra" value="' . $page_num . '">Конец</button>';
-} else {
-    echo '<button class="pagination__elem pagination__elem_current" value="1">1</button>';
-}
+include_once ('static/public/php/paginate.php');
 //    echo '<button class="pagination__elem" value="1">Назад</button>';
 //    echo '<button class="pagination__elem pagination__elem_current" value="1">1</button>';
 //    for ($i = 1; $i < $data['pages']; ++$i) {
@@ -67,7 +54,7 @@ if ($data['pages'] > 1) {
 //    echo '<button class="pagination__elem" value="' . $i . '">Вперед</button>';
 //}
 
-echo '</div>';
-?>
+/*echo '</div>';
+*/?>
 <script src="/static/public/js/pagination.js" type="module"></script>
 <script src="/static/public/js/ajax.js" type="module"></script>

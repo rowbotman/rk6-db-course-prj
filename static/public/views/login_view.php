@@ -1,4 +1,4 @@
-<div class="container login-container">
+<div class="login__container login-container">
     <div class="form-container">
         <span class="icon icon-size-25 close-icon icon-black icon-button close-button"></span>
         <form method="POST" action="/auth/login" novalidate>
@@ -34,7 +34,7 @@
                 <a href=# class="link-font">Забыли пароль?</a>
             </div>
             <div class="container-large">
-                <button class="btn btn-box-small btn-color-red" type="submit" name="submit">
+                <button class="login__btn btn-box-small btn-color-red" type="submit" name="submit">
                     <div class="success-btn-font">Войти</div>
                 </button>
                 <p class="comment-text">или продолжить через</p>

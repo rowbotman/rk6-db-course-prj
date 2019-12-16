@@ -25,7 +25,7 @@ class ModelUser extends Model
         $data = DataBase::getRow($sql_statement, self::$hash);
         if ($data) {
             self::$user = array(
-                'name' => $data['name'],
+                'name' => $data['firstName'],
                 'role' => $data['role'],
                 'uid' => $data['uid'],
                 'hash' => $data['pass']);

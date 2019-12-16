@@ -72,7 +72,7 @@ class Router
             }
         } else {
             include 'static/public/php/pagination.php';
-            get_page($routes[2], $routes[3], $_GET['page']);
+            get_page($routes[2], $routes[3]);
         }
     }
 
