@@ -1,8 +1,12 @@
 <?php
 class Controller_Exit extends Controller
 {
+    /**
+     * Controller_Exit constructor.
+     */
     function __construct()
     {
+        Controller::__construct();
         $this->view = new View();
     }
 

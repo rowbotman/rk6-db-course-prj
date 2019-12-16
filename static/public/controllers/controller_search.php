@@ -4,6 +4,7 @@ require_once('static/public/models/model_search.php');
 class Controller_Search extends Controller
 {
     static private $limit = 10;
+
     function __construct()
     {
         $this->model = new ModelSearch(10, 0);
@@ -35,7 +36,8 @@ AND t.flight_id = :flight_id;';
             ['pages' => ceil($pages[0]['count'][0] / self::$limit), 'data' => $data]);
     }
 
-    function action_booking_from() { // TODO: add t.class in sql statement
+    function action_booking_from()
+    { // TODO: add t.class in sql statement
         $user_data = [$_GET['var1']];
         $data = [['' => 'Empty set']];
         if ($user_data) {
@@ -83,7 +85,8 @@ GROUP BY flight, month, t.class) query';
             ['pages' => ceil($pages[0]['count'][0] / self::$limit), 'data' => $data]);
     }
 
-    function action_often_bought_users_in() {
+    function action_often_bought_users_in()
+    {
         $sql = 'WITH spring_flight AS 
 ( 
   SELECT MAX(num) FROM (
@@ -95,7 +98,7 @@ GROUP BY flight, month, t.class) query';
   WHERE YEAR(f.dep_date) = ? AND MONTH(f.dep_date) BETWEEN ? AND ? 
   GROUP BY p.uid HAVING COUNT(*) = (SELECT * FROM spring_flight)) item_num;';
         $user_data = [$_GET['var3'], $_GET['var1'], $_GET['var2'],
-                      $_GET['var3'], $_GET['var1'], $_GET['var2']];
+            $_GET['var3'], $_GET['var1'], $_GET['var2']];
         $pages = DataBase::getRow($sql, $user_data);
         if (!$pages) {
             $pages[0] = 0;
@@ -105,7 +108,8 @@ GROUP BY flight, month, t.class) query';
             ['pages' => ceil($pages[0] / self::$limit), 'data' => $data]);
     }
 
-    function action_bonus_miles_hist() {
+    function action_bonus_miles_hist()
+    {
         $sql = 'SELECT COUNT(*) FROM (SELECT t.flight_id, f.dep_date AS sum FROM detail d
 JOIN ticket t ON (t.uid = d.ticket_id) JOIN flight f ON (t.flight_id = f.uid)
 GROUP BY t.flight_id, f.dep_date) subquery;';

@@ -1,21 +1,26 @@
 <?php
-class Router {
+
+class Router
+{
     public static $prev_url = '/';
+
     /**
      *
      */
-    static function start() {
+    static function start()
+    {
+        session_start();
         // контроллер и действие по умолчанию
         $controller_name = 'Menu';
         $action_name = 'index';
         $current_url = $_SERVER['REQUEST_URI'];
         $without_symb = explode('?', $_SERVER['REQUEST_URI']);
         $routes = explode('/', $without_symb[0]);
+        $is_auth = false;
 
         if ($routes[1] != 'ajax') {
             // получаем имя контроллера
             if (!empty($routes[1])) {
-
                 $controller_name = $routes[1];
             }
 
@@ -67,14 +72,15 @@ class Router {
             }
         } else {
             include 'static/public/php/pagination.php';
-            get_page($routes[2], $routes[3], $_GET['page']);
+            get_page($routes[2], $routes[3]);
         }
     }
-    
-    function ErrorPage404() {
-        $host = 'http://'.$_SERVER['HTTP_HOST'].'/';
+
+    function ErrorPage404()
+    {
+        $host = 'http://' . $_SERVER['HTTP_HOST'] . '/';
         header('HTTP/1.1 404 Not Found');
         header("Status: 404 Not Found");
-        header('Location:'.$host.'404');
+        header('Location:' . $host . '404');
     }
 }

@@ -7,6 +7,11 @@
     <title>Flight bonus program</title>
     <link rel="shortcut icon" href="../../../favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/login.css">
+    <link rel="stylesheet" href="/static/css/icons.css">
+    <link rel="stylesheet" href="/static/css/common.css">
+    <link rel="stylesheet" href="/static/css/register.css">
+    <link rel="stylesheet" href="/static/css/update.css">
 </head>
 <body>
 <div id="application">
@@ -15,10 +20,16 @@
             <i class="icon icon_color_white icon_size_header-fit icon_type_archive"></i>
             <a class="header__title" href="/">COURSACHEIT</a>
         </div>
-        <a class="header__exit" href="/exit">Выход</a>
+        <?php
+        if (!isset($_SESSION['name'])) {
+            echo '<a class="header__exit" href="/auth?login=true">Login</a>';
+        } else {
+            echo '<a class="header__exit" href="/auth?logout=true">' .$_SESSION['name']. '</a>';
+        }
+        ?>
     </div>
     <div id="main">
-        <?php include 'static/public/views/'.$content_view; ?>
+        <?php include 'static/public/views/' . $content_view; ?>
     </div>
 </div>
 </body>

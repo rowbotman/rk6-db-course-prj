@@ -4,17 +4,18 @@
 # File Name : generate2.py
 # Purpose : just for fun
 # Creation Date : 21-03-2019
-# Last Modified : Пн 20 май 2019 03:16:36
+# Last Modified : Пн 16 дек 2019 18:52:25
 # Created By : Andrey Prokopenko, BMSTU
 ############################################
 
 import mysql.connector
 import json
 import ast
-from datetime import datetime
-
 import random
 import time
+import hashlib
+from datetime import datetime
+
 
 def strTimeProp(start, end, format, prop):
     stime = time.mktime(time.strptime(start, format))
@@ -41,14 +42,22 @@ mycursor = mydb.cursor()
 def insertIntoProfile(value):
     #val = json.loads(value)
     #print(val[0][0])
-    sql = "INSERT INTO profile (firstName, lastName, votes) VALUES (%s, %s, %s)"
+    default_pass = 'passwd'
+    salt = 'salt'
+    default_pass += salt
+    sql = "INSERT INTO profile (firstName, lastName, votes, pass, role) VALUES (%s, %s, %s, %s, %s)"
     for i in range(100):
         insertion = []
         insertion.append(value[i]['firstName'])
         insertion.append(value[i]['lastName'])
         insertion.append(value[i]['votes'])
+        hash_pass = value[i]['firstName'] + default_pass
+        hasher = hashlib.sha1()
+        hasher.update(hash_pass.encode())
+        insertion.append(hasher.hexdigest())
+        insertion.append(str(i % 3))
         req = tuple(insertion)
-        mycursor.execute(sql, req);
+        mycursor.execute(sql, req)
         mydb.commit()
    # mycursor.executemany(sql, value)
     print(mycursor.rowcount, "was inserted.")
@@ -70,8 +79,7 @@ def insertIntoTickets(value):
         insertion.append(value[i]['class'])
         insertion.append(value[i]['price'])
         req = tuple(insertion)
-        #print(req)
-        mycursor.execute(sql, req);
+        mycursor.execute(sql, req)
         mydb.commit()
 
     print(mycursor.rowcount, "was inserted.")
@@ -103,7 +111,7 @@ def insertIntoDetail(value):
         insertion.append(randomDate("2010/01/01 01:01:01", "2018/01/01 01:01:01", random.random()))#initTickets(int(value[i]['bonus_date'])))
         req = tuple(insertion)
         print(req)
-        mycursor.execute(sql, req);
+        mycursor.execute(sql, req)
         mydb.commit()
     print(mycursor.rowcount, "was inserted.")
 
