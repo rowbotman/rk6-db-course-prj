@@ -1,10 +1,13 @@
+build
+.idea
+node_modules
+.DS_Store
+.DB_Store
 *.swp
 *.swo
 *.out
-.idea
 *.plan
 *.map
 *.css
 .htaccess
-node_modules
 package-lock.json
