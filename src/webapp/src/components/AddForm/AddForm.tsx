@@ -1,11 +1,21 @@
+import * as cn from 'classnames';
 import * as React from 'react';
-import { Button } from '@material-ui/core';
+
+import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
+
+import * as s from './AddForm.scss';
+import * as f from 'Styles/_font.scss';
 
 interface IAddFormProps {
 	onSubmit?: (arg: any) => void;
 	onCancel?: () => void;
+}
+
+interface IRow {
+	desc: string;
+	type: 'number' | 'text';
 }
 
 export class AddForm extends React.Component<IAddFormProps> {
@@ -17,39 +27,64 @@ export class AddForm extends React.Component<IAddFormProps> {
 		}
 	};
 
-	render() {
+	#onCancel = () => {
+		if (this.props?.onCancel) {
+			this.props.onCancel();
+		}
+	};
+
+	get fields(): IRow[] {
+		return [
+			{
+				desc: 'Город отправления',
+				type: 'text',
+			},
+			{
+				desc: 'Город прибытия',
+				type: 'text',
+			},
+			{
+				desc: 'Номер рейса',
+				type: 'text',
+			},
+			{
+				desc: 'Количество пассажиров',
+				type: 'number',
+			},
+		];
+	}
+
+	render(): JSX.Element {
 		return (
-			<Container>
-				<div>Создать новый рейс</div>
+			<Container className={s.addForm}>
+				<div className={s.addForm__title}>
+					<span className={cn(f.font, f.font_size_large, f.font_bold)}>Создать новый рейс</span>
+				</div>
 				<form noValidate autoComplete="off">
-					<div>
-						<div>
-							<div>Город отправления</div>
-							<TextField variant="outlined"/>
+					{this.fields.map(({ desc, type }, idx) => (
+						<div className={s.addForm__grid}>
+							<div className={s.addForm__desc}>{desc}</div>
+							<TextField type={type} className={s.addForm__input} size="small" variant="outlined"/>
 						</div>
-						<div>
-							<div>Город прибытия</div>
-							<TextField variant="outlined"/>
-						</div>
-						<div>
-							<div>Номер рейса</div>
-							<TextField variant="outlined"/>
-						</div>
-						<div>
-							<div>Количество пассажиров</div>
-							<TextField variant="outlined" type="number"/>
-						</div>
-					</div>
+					))}
 				</form>
-				<div className="btn-block">
+				<div className={s.addForm__manage}>
 					<Button
+						className={s.addForm__btn}
 						variant="contained"
 						color="primary"
 						onClick={this.#pullFormData}
 					>
 						Создать
 					</Button>
-					<Button variant="contained" color="secondary">Отмена</Button>
+					<Button
+						className={s.addForm__btn}
+						variant="contained"
+						color="secondary"
+						onClick={this.#onCancel}
+					>
+						Отмена
+					</Button>
 				</div>
 			</Container>
 		);

@@ -36,7 +36,10 @@ export class App extends React.Component<IAppProps, IAppState> {
 			);
 		} else if (openPage === 1) {
 			return (
-				<AddForm/>
+				<AddForm
+					onCancel={() => this.setState({ openPage: 0 })}
+					onSubmit={() => null}
+				/>
 			);
 		}
 	}
