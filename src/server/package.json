@@ -1,10 +1,10 @@
 {
   "name": "rk6-db-course-prj",
   "version": "1.0.0",
-  "main": "./main.js",
+  "main": "js/main.js",
   "scripts": {
-    "lint:css": "stylelint static/**/*.scss",
-    "build": "sass ./styles/style.scss:../css/style.css"
+    "lint:css": "js/node_modules/.bin/stylelint static/**/*.scss",
+    "build": "sass ./styles/style.scss:./css/style.css"
   },
   "dependencies": {},
   "devDependencies": {

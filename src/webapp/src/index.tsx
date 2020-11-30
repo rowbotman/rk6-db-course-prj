@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 import { render } from 'react-dom';
-
-const App = () => (<p>Hello React</p>);
+import { App } from './App';
 
 const root = document.getElementById('root');
+
 render(<App/>, root);

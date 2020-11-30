@@ -19,7 +19,7 @@ module.exports = (env, options) => {
                 'Const': path.resolve(__dirname, '../src/const/'),
                 'Utils': path.resolve(__dirname, '../src/utils/'),
                 'Redux': path.resolve(__dirname, '../src/redux/'),
-                'Network': path.resolve(__dirname, '../src/net/'),
+                'Network': path.resolve(__dirname, '../src/network/'),
                 'Static': path.resolve(__dirname, '../src/static/'),
                 'Styles': path.resolve(__dirname, '../src/styles/'),
             },
@@ -32,7 +32,7 @@ module.exports = (env, options) => {
         module: {
             rules: [
                 {
-                    test: /\.tsx?$/,
+                    test: /\.(ts|tsx)$/,
                     use: [
                         {
                             loader: 'thread-loader',

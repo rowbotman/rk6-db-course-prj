@@ -5,6 +5,7 @@
   "main": "src/index.tsx",
   "scripts": {
     "build": "npx webpack --mode=development",
+    "build:watch": "npx webpack -w --mode=development",
     "test": "echo 0"
   },
   "keywords": [
@@ -29,6 +30,7 @@
     "html-webpack-plugin": "^4.5.0",
     "postcss-loader": "^4.1.0",
     "sass-loader": "^10.1.0",
+    "stylelint": "^13.8.0",
     "thread-loader": "^3.0.1",
     "ts-loader": "^8.0.11",
     "webpack": "^5.9.0",

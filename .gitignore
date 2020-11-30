@@ -1,6 +1,7 @@
 build
 .idea
 node_modules
+dist
 .DS_Store
 .DB_Store
 *.swp
