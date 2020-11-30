@@ -107,6 +107,7 @@ module.exports = (env, options) => {
                 'Utils': path.resolve(__dirname, '../src/utils/'),
                 'Redux': path.resolve(__dirname, '../src/redux/'),
                 'Network': path.resolve(__dirname, '../src/network/'),
+                'Interfaces': path.resolve(__dirname, '../src/interfaces/'),
                 'Static': path.resolve(__dirname, '../src/static/'),
                 'Styles': path.resolve(__dirname, '../src/styles/'),
             },

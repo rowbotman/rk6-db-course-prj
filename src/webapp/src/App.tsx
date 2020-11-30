@@ -6,6 +6,7 @@ import { AddForm } from 'Components/AddForm';
 import { AddFlightBtn } from 'Components/AddFlightBtn';
 import { FlightList } from 'Components/FlightList';
 import { Header } from 'Components/Header';
+import { IMap } from 'Interfaces';
 
 
 interface IAppState {
@@ -25,6 +26,10 @@ export class App extends React.Component<IAppProps, IAppState> {
 		this.setState({ openPage: 1 });
 	}
 
+	private onCreateNewFlight(data: IMap) {
+		console.log(data);
+	}
+
 	private detectPage() {
 		const { openPage } = this.state;
 		if (openPage === 0) {
@@ -38,7 +43,7 @@ export class App extends React.Component<IAppProps, IAppState> {
 			return (
 				<AddForm
 					onCancel={() => this.setState({ openPage: 0 })}
-					onSubmit={() => null}
+					onSubmit={this.onCreateNewFlight.bind(this)}
 				/>
 			);
 		}

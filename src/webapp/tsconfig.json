@@ -28,6 +28,12 @@
       "Redux/*": [
         "src/redux/*"
       ],
+      "Interfaces": [
+        "src/interfaces/index"
+      ],
+      "Interfaces/*": [
+        "src/interfaces/*"
+      ],
       "Network": [
         "src/network/index"
       ],
