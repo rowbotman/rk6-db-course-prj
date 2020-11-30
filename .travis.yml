@@ -49,7 +49,7 @@ install:
   - composer install --prefer-dist
 
   # copy the Nginx configuration file for the site among the available ones from
-  # the `build` folder; the content of the Nginx configuration file I'm using is
+  # the `build` folder; the styles of the Nginx configuration file I'm using is
   # specific to WordPress (see below) so use whatever you need to use.
   # Given the current environment configuration it will be copied to `/etc/nginx/sites-available/site.localhost`
   - sudo cp configs/coursacheit.conf /etc/nginx/sites-available/$SITE_DOMAIN

@@ -1,8 +1,11 @@
 import * as React from 'react';
 
-import { AddForm } from 'Components/AddForm/AddForm.tsx';
-import { AddFlightBtn } from 'Components/AddFlightBtn/AddFlightBtn.tsx';
-import { FlightList } from 'Components/FlightList/FlightList.tsx';
+import { Container } from '@material-ui/core';
+
+import { AddForm } from 'Components/AddForm';
+import { AddFlightBtn } from 'Components/AddFlightBtn';
+import { FlightList } from 'Components/FlightList';
+import { Header } from 'Components/Header';
 
 
 interface IAppState {
@@ -28,7 +31,7 @@ export class App extends React.Component<IAppProps, IAppState> {
 			return (
 				<div>
 					<FlightList/>
-					<AddFlightBtn onClick={this.onAddBtnClick}/>
+					<AddFlightBtn onClick={this.onAddBtnClick.bind(this)}/>
 				</div>
 			);
 		} else if (openPage === 1) {
@@ -40,8 +43,11 @@ export class App extends React.Component<IAppProps, IAppState> {
 
 	render(): JSX.Element {
 		return (
-			<div>
-				{this.detectPage()}
+			<div className="main">
+				<Header/>
+				<Container maxWidth="sm">
+					{this.detectPage()}
+				</Container>
 			</div>
 		);
 	}

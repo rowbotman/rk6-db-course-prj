@@ -1,0 +1,48 @@
+$primary-color:  #0d47a1; //#fb6a06;
+$primary-color-text: white;
+$primary-color-dark: #a74604;
+$primary-color-dark-text: #0d47a1; //white;
+$primary-color-light: #0d47a1;
+$primary-color-light-text: black;
+
+$secondary-color: #2e7d32;
+$secondary-color-text: white;
+$secondary-color-dark: #005005;
+$secondary-color-dark-text: white;
+$secondary-color-light: #60ad5e;
+$secondary-color-light-text: black;
+
+$border-color: #E0E0E0;
+$body-color: white;
+$body-color-dark: #858585;
+$focus-color: lightblue;
+$error-color: #FF1100;
+$link-color: #005BD1;
+
+$muted-color-dark: #A9A9A9;
+$muted-color-light: #F7F7F7;
+$orange: #FD9E0B;
+$dark-gray: #393939;
+$outline-color: #F5F5F5;
+$shadow-color: #676767;
+
+$vk-color: #4A76A8;
+$fb-color: #3B5998;
+$ok-color: #EE8208;
+
+$font-stack: Helvetica, Arial, sans-serif;
+$small-font-size: 12px;
+$smaller-font-size: 9px;
+
+$shadow-focus: 0 0 50px -12px $focus-color;
+$shadow-outline: 0 2px 0 0 $outline-color;
+$shadow-small-focus: 0 0 12px -1px $focus-color;
+$shadow-tiny: 0 0 50px -5px $shadow-color;
+
+$z-index-scale: 100;
+$z-index-popup: 1 * $z-index-scale;
+$z-index-input: 2 * $z-index-scale;
+$z-index-shadow: 3 * $z-index-scale;
+$z-index-tooltip: 4 * $z-index-scale;
+
+$field-height: 30px;

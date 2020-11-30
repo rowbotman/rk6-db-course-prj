@@ -1,34 +1,16 @@
 const path = require('path');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+
 
 module.exports = (env, options) => {
     return {
-        mode: options.mode,
-
-        devtool: 'source-map',
-
         entry: {
             app: './src/index.tsx',
         },
-        resolve: {
-            extensions: ['.js', '.jsx', '.ts', '.tsx', '.scss', '.css'],
-            alias: {
-                'Components': path.resolve(__dirname, '../src/components/'),
-                'Const': path.resolve(__dirname, '../src/const/'),
-                'Utils': path.resolve(__dirname, '../src/utils/'),
-                'Redux': path.resolve(__dirname, '../src/redux/'),
-                'Network': path.resolve(__dirname, '../src/network/'),
-                'Static': path.resolve(__dirname, '../src/static/'),
-                'Styles': path.resolve(__dirname, '../src/styles/'),
-            },
-        },
-        output: {
-            filename: 'js/[name].js',
-            path: path.resolve(__dirname, '../dist'),
-            publicPath: '/',
-        },
+        devtool: 'source-map',
+        mode: options.mode,
         module: {
             rules: [
                 {
@@ -43,7 +25,7 @@ module.exports = (env, options) => {
                         {
                             loader: 'ts-loader',
                             options: {
-                                configFile: '../tsconfig.json',
+                                configFile: path.resolve(__dirname, '../', 'tsconfig.json'),
                                 transpileOnly: true,
                                 happyPackMode: true,
                             }
@@ -84,7 +66,6 @@ module.exports = (env, options) => {
                                 importLoaders: 1,
                                 sourceMap: true,
                                 esModule: true,
-                                localsConvention: 'dashes',
                                 modules: {
                                     localIdentName: '[local]',
                                 },
@@ -96,6 +77,7 @@ module.exports = (env, options) => {
                                 sourceMap: true,
                                 postcssOptions: {
                                     config: 'postcss.config.js',
+                                    path: '.',
                                 },
                             },
                         },
@@ -110,8 +92,24 @@ module.exports = (env, options) => {
                     include: [
                         path.resolve(__dirname, '../src'),
                     ],
+                    exclude: [
+                        path.resolve(__dirname, '../node_modules/'),
+                    ],
                 },
             ],
+        },
+
+        resolve: {
+            extensions: ['.ts', '.tsx', '.js', '.jsx', '.scss', '.css'],
+            alias: {
+                'Components': path.resolve(__dirname, '../src/components/'),
+                'Const': path.resolve(__dirname, '../src/const/'),
+                'Utils': path.resolve(__dirname, '../src/utils/'),
+                'Redux': path.resolve(__dirname, '../src/redux/'),
+                'Network': path.resolve(__dirname, '../src/network/'),
+                'Static': path.resolve(__dirname, '../src/static/'),
+                'Styles': path.resolve(__dirname, '../src/styles/'),
+            },
         },
 
         plugins: [
@@ -123,5 +121,10 @@ module.exports = (env, options) => {
                 HOST: 'http://localhost:3003',
             }),
         ],
+        output: {
+            filename: 'js/bundle.js',
+            path: path.resolve(__dirname, '../dist'),
+            publicPath: '/',
+        },
     };
 };
