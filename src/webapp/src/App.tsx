@@ -4,8 +4,10 @@ import { Container } from '@material-ui/core';
 
 import { AddForm } from 'Components/AddForm';
 import { AddFlightBtn } from 'Components/AddFlightBtn';
-import { FlightList } from 'Components/FlightList';
 import { Header } from 'Components/Header';
+import { ManageFlight } from 'Components/ManageFlight';
+import { FlightList } from 'Components/FlightList';
+
 import { Pages } from 'Const';
 
 interface IAppState {
@@ -29,25 +31,29 @@ export class App extends React.Component<IAppProps, IAppState> {
 
 	private detectPage() {
 		const { openPage } = this.state;
-		if (openPage === Pages.kFlightList) {
-			return (
-				<div>
-					<FlightList/>
-					<AddFlightBtn onClick={this.onAddBtnClick.bind(this)}/>
-				</div>
-			);
-		} else if (openPage === Pages.kAddForm) {
-			return (
-				<AddForm
-					onCancel={() => this.setState({ openPage: 0 })}
-					onSubmit={(flight, pCount) => {
-						console.log('state changed');
-						this.setState({ openPage: Pages.kManageFlight });
-					}}
-				/>
-			);
-		} else {
-			return <p>404 Page not found</p>;
+		switch (openPage) {
+			case Pages.kFlightList:
+				return (
+					<div>
+						<FlightList/>
+						<AddFlightBtn onClick={this.onAddBtnClick.bind(this)}/>
+					</div>
+				);
+			case Pages.kAddForm:
+				return (
+					<AddForm
+						onCancel={() => this.setState({ openPage: Pages.kFlightList })}
+						onSubmit={(flight, pCount) => {
+							console.log('state changed');
+							this.setState({ openPage: Pages.kManageFlight });
+						}}
+					/>
+				);
+			case Pages.kManageFlight:
+				return <ManageFlight/>;
+			default:
+				return <p>404 Page not found</p>;
+
 		}
 	}
 
