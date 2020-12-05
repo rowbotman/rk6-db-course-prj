@@ -7,6 +7,16 @@
 		padding-bottom: 8px;
 	}
 
+	&__main {
+		display: block;
+		&_warn {
+			border: 1px #fdf32e solid;
+		}
+		&_err {
+			border: 1px #ff1f3a solid;
+		}
+	}
+
 	&__grid {
 		display: grid;
 		grid-template-columns: 1fr 1fr;

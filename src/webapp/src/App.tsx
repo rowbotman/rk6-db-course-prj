@@ -40,7 +40,10 @@ export class App extends React.Component<IAppProps, IAppState> {
 			return (
 				<AddForm
 					onCancel={() => this.setState({ openPage: 0 })}
-					onSubmit={(flight, pCount) => this.setState({ openPage: Pages.kManageFlight })}
+					onSubmit={(flight, pCount) => {
+						console.log('state changed');
+						this.setState({ openPage: Pages.kManageFlight });
+					}}
 				/>
 			);
 		} else {
