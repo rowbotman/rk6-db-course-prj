@@ -5,32 +5,39 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 
+import { parseFromData } from 'Utils';
+import { FlightNetwork } from 'Network';
+
+import { IAddFormProps, IAddFormSate, REQUIRED_FIELDS, Status } from './types';
+
 import * as s from './AddForm.scss';
 import * as f from 'Styles/_font.scss';
 
-import { parseFromData } from 'Utils';
-import { IMap } from 'Interfaces';
-
-interface IAddFormProps {
-	onSubmit?: (arg: IMap) => void;
-	onCancel?: () => void;
-}
-
-interface IRow {
-	desc: string;
-	type: 'number' | 'text';
-	name: string;
-}
-
-export class AddForm extends React.Component<IAddFormProps> {
+export class AddForm extends React.Component<IAddFormProps, IAddFormSate> {
 
 	#myRef = React.createRef<HTMLFormElement>();
+	#api = new FlightNetwork();
+	#fields = REQUIRED_FIELDS;
 
-	#pullFormData = () => {
-		if (this.props?.onSubmit) {
-			const parsed = parseFromData(this.#myRef.current);
-			this.props?.onSubmit(parsed);
+	#pullFormData = async () => {
+		const parsed = parseFromData(this.#myRef.current);
+		try {
+			const res = await this.#api.createFlight(parsed);
+			let status = Status.kOK;
+			if (res !== {}) {
+				status = Status.kErr;
+				this.setState({ status });
+				return;
+			}
+			if (this.props?.onSubmit) {
+				this.props.onSubmit(parsed['flight'] as string, parsed['passengers'] as number);
+			}
+			this.setState({ status });
+		} catch (e) {
+			this.setState({ status: Status.kErr });
+			console.error(e);
 		}
+
 	};
 
 	#onCancel = () => {
@@ -39,31 +46,6 @@ export class AddForm extends React.Component<IAddFormProps> {
 		}
 	};
 
-	get fields(): IRow[] {
-		return [
-			{
-				desc: 'Город отправления',
-				type: 'text',
-				name: 'departure',
-			},
-			{
-				desc: 'Город прибытия',
-				type: 'text',
-				name: 'arrival',
-			},
-			{
-				desc: 'Номер рейса',
-				type: 'text',
-				name: 'flight',
-			},
-			{
-				desc: 'Количество пассажиров',
-				type: 'number',
-				name: 'passengers',
-			},
-		];
-	}
-
 	render(): JSX.Element {
 		return (
 			<Container className={s.addForm}>
@@ -71,7 +53,7 @@ export class AddForm extends React.Component<IAddFormProps> {
 					<span className={cn(f.font, f.font_size_large, f.font_bold)}>Создать новый рейс</span>
 				</div>
 				<form noValidate autoComplete="off" ref={this.#myRef}>
-					{this.fields.map(({ desc, type, name }, idx) => (
+					{this.#fields.map(({ desc, type, name }, idx) => (
 						<div className={s.addForm__grid} key={idx}>
 							<div className={s.addForm__desc}>{desc}</div>
 							<TextField

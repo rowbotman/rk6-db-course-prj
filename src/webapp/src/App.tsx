@@ -6,11 +6,11 @@ import { AddForm } from 'Components/AddForm';
 import { AddFlightBtn } from 'Components/AddFlightBtn';
 import { FlightList } from 'Components/FlightList';
 import { Header } from 'Components/Header';
-import { IMap } from 'Interfaces';
-
+import { Pages } from 'Const';
 
 interface IAppState {
-	openPage: number;
+	openPage: Pages;
+	error: boolean;
 }
 
 interface IAppProps {
@@ -19,33 +19,32 @@ interface IAppProps {
 export class App extends React.Component<IAppProps, IAppState> {
 
 	state: IAppState = {
-		openPage: 0,
+		openPage: Pages.kFlightList,
+		error: false,
 	};
 
 	private onAddBtnClick() {
-		this.setState({ openPage: 1 });
-	}
-
-	private onCreateNewFlight(data: IMap) {
-		console.log(data);
+		this.setState({ openPage: Pages.kAddForm });
 	}
 
 	private detectPage() {
 		const { openPage } = this.state;
-		if (openPage === 0) {
+		if (openPage === Pages.kFlightList) {
 			return (
 				<div>
 					<FlightList/>
 					<AddFlightBtn onClick={this.onAddBtnClick.bind(this)}/>
 				</div>
 			);
-		} else if (openPage === 1) {
+		} else if (openPage === Pages.kAddForm) {
 			return (
 				<AddForm
 					onCancel={() => this.setState({ openPage: 0 })}
-					onSubmit={this.onCreateNewFlight.bind(this)}
+					onSubmit={(flight, pCount) => this.setState({ openPage: Pages.kManageFlight })}
 				/>
 			);
+		} else {
+			return <p>404 Page not found</p>;
 		}
 	}
 

@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 
 module.exports = (env, options) => {
@@ -119,7 +119,7 @@ module.exports = (env, options) => {
                 template: 'src/index.html',
             }),
             new webpack.DefinePlugin({
-                HOST: 'http://localhost:3003',
+                HOST: `'http://localhost:3003'`,
             }),
         ],
         output: {
