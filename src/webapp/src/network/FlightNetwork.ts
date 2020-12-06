@@ -1,7 +1,7 @@
 import { IMap } from 'Interfaces';
 import { Network } from 'Network/Network';
 
-export interface IFlight {
+export interface IFlightNetworkRequestData {
 	passengers: number;
 	flight: string;
 	departure: string;
@@ -10,12 +10,16 @@ export interface IFlight {
 
 export class FlightNetwork {
 	createFlight = async (data: IMap) => {
-		const mediator: IFlight = {
+		const mediator: IFlightNetworkRequestData = {
 			passengers: +data?.passengers,
 			flight: (data?.flight || '') as string,
 			arrival: (data?.arrival || '') as string,
 			departure: (data?.departure || '') as string,
 		};
-		return await Network.fetchPost<IFlight>('api/flight', mediator);
+		return await Network.fetchPost<IFlightNetworkRequestData>('api/flight', mediator);
+	};
+
+	cancelFlight = async (orderId: string) => {
+		return await Network.fetchDelete(`api/flight?orderId=${orderId}`);
 	};
 }

@@ -7,31 +7,72 @@ import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 
-import { IFlight, IFlightListProps } from './types';
+import { IFlightListProps, RowActions } from './types';
+import { IFlight } from 'Interfaces';
+import { ReservationRow } from 'Components/ReservationRow';
+import { FlightNetwork } from 'Network';
+import { Popup } from 'Components/Popup';
 
-export class FlightList extends React.Component<IFlightListProps> {
+interface IFlightListState {
+	openChange: boolean;
+	changingFlight: number;
+}
+
+export class FlightList extends React.Component<IFlightListProps, IFlightListState> {
+
+	#api = new FlightNetwork();
+	state: IFlightListState = {
+		changingFlight: -1,
+		openChange: false,
+	};
+	#rows: IFlight[] = [
+		{
+			date: (new Date()).getTime(),
+			departure: 'Moscow',
+			arrival: 'Tokyo',
+			id: '123',
+		},
+		{
+			date: (new Date()).getTime(),
+			departure: 'Moscow',
+			arrival: 'Tokyo',
+			id: '123',
+		},
+		{
+			date: (new Date()).getTime(),
+			departure: 'Moscow',
+			arrival: 'Tokyo',
+			id: '123',
+		},
+	];
+
+	rowHandler = (type: RowActions, internalId: number) => {
+		console.log('click');
+		switch (type) {
+			case RowActions.kCancel:
+				void this.#api.cancelFlight(internalId.toString());
+				return;
+			case RowActions.kChange:
+				this.setState({ openChange: true, changingFlight: internalId.toString() });
+		}
+	};
+
+	drawPopup() {
+		const {changingFlight} = this.state;
+		if (changingFlight)
+		return (
+			<Popup>
+				<ChangeBook {...this.#rows[changingFlight]}/>
+			</Popup>
+		);
+	}
 
 	render() {
-		const rows: IFlight[] = [
-			{
-				date: (new Date()).getTime() / 1000,
-				departure: 'Moscow',
-				arrival: 'Tokyo',
-				id: '123',
-			},
-			{
-				date: (new Date()).getTime() / 1000,
-				departure: 'Moscow',
-				arrival: 'Tokyo',
-				id: '123',
-			},
-			{
-				date: (new Date()).getTime() / 1000,
-				departure: 'Moscow',
-				arrival: 'Tokyo',
-				id: '123',
-			},
-		];
+		const { openChange } = this.state;
+		if (openChange) {
+			this.drawPopup();
+		}
+		const rows = this.#rows;
 		return (
 			<TableContainer>
 				<Table>
@@ -40,18 +81,14 @@ export class FlightList extends React.Component<IFlightListProps> {
 							<TableCell align="center">Номер рейса</TableCell>
 							<TableCell align="left">Город отправления</TableCell>
 							<TableCell align="left">Город прибытия</TableCell>
-							<TableCell align="left">Дата</TableCell>
+							<TableCell align="center">Дата</TableCell>
+							<TableCell align="center">Действия</TableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>
 						{rows.sort((a, b) => a.date - b.date)
-							.map((flight, id) => (
-								<TableRow key={id}>
-									<TableCell align="center" component="th" scope="row">{flight.id}</TableCell>
-									<TableCell align="left">{flight.departure}</TableCell>
-									<TableCell align="left">{flight.arrival}</TableCell>
-									<TableCell align="left">{flight.date}</TableCell>
-								</TableRow>
+							.map((flight, idx) => (
+								<ReservationRow key={idx} action={this.rowHandler} internalId={idx} {...flight}/>
 							))}
 					</TableBody>
 				</Table>

@@ -1,29 +1,31 @@
+type TMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+
 export class Network {
 	static fetchGet = async <T = {}>(path = '/', api = HOST) => {
+		return Network.fetchRequest('GET', path, api);
+	};
+
+	static fetchRequest = async <T = {}>(method: TMethod, path: string, api = HOST, body: T = null) => {
 		if (path.includes('undefined')) {
 			throw new Error('Invalid path, boy');
 		}
 		const res = await fetch(`${api}/${path}`, {
-			method: 'GET',
+			method,
+			mode: 'cors',
 			credentials: 'include',
-			headers: {},
+			headers: body ? {
+				'Content-Type': 'application/json; charset=utf-8',
+			} : {},
+			body: body ? JSON.stringify(body) : null,
 		});
 		return await res.json();
 	};
 
-	static fetchPost = async <T = {}>(path: string, body: T, api = HOST) => {
-		if (path.includes('undefined')) {
-			throw new Error('Invalid path, boy');
-		}
-		const res = await fetch(`${api}/${path}`, {
-			method: 'POST',
-			mode: 'cors',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json; charset=utf-8',
-			},
-			body: JSON.stringify(body),
-		});
-		return await res.json();
+	static fetchDelete = async <T = {}>(path: string, body: T = null, api = HOST) => {
+		return Network.fetchRequest('GET', path, api, body);
+	};
+
+	static fetchPost = async <T = {}>(path: string, body: T = null, api = HOST) => {
+		return Network.fetchRequest('POST', path, api, body);
 	};
 }

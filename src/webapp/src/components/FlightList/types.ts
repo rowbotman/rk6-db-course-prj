@@ -1,9 +1,7 @@
 export interface IFlightListProps {
 }
 
-export interface IFlight {
-	id: string;
-	departure: string;
-	arrival: string;
-	date: number;
+export const enum RowActions {
+	kCancel,
+	kChange,
 }
