@@ -6,6 +6,7 @@ import { REQUIRED_FIELDS } from 'Components/AddForm/types';
 import * as s from './ChangeBook.scss';
 
 export interface IChangeBookProps extends IFlight {
+	onCancel?: () => void;
 }
 
 export interface IChangeBookState {
@@ -19,6 +20,9 @@ export class ChangeBook extends React.Component<IChangeBookProps, IChangeBookSta
 	}
 
 	onCancel() {
+		if (this.props?.onCancel) {
+			this.props.onCancel();
+		}
 	}
 
 	render(): JSX.Element {
@@ -27,8 +31,8 @@ export class ChangeBook extends React.Component<IChangeBookProps, IChangeBookSta
 				<FlightForm
 					myRef={this.#formRef}
 					fields={REQUIRED_FIELDS}
-					onSubmit={this.onSubmit}
-					onCancel={this.onCancel}
+					onSubmit={this.onSubmit.bind(this)}
+					onCancel={this.onCancel.bind(this)}
 				/>
 			</div>
 		);

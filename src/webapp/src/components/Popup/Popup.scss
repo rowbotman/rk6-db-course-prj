@@ -22,7 +22,17 @@ $z-index-popup: 1 * $z-index-scale;
 
 	border-radius: 5px;
 
-	&__close-popup {
+	&__container {
+		width: 80vw;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	&__header {
+		position: relative;
+	}
+
+	&__close {
 		position: absolute;
 		top: $popup-top-padding - 7px;
 		right: $popup-right-padding - 7px;

@@ -22,7 +22,7 @@ export class Network {
 	};
 
 	static fetchDelete = async <T = {}>(path: string, body: T = null, api = HOST) => {
-		return Network.fetchRequest('GET', path, api, body);
+		return Network.fetchRequest('DELETE', path, api, body);
 	};
 
 	static fetchPost = async <T = {}>(path: string, body: T = null, api = HOST) => {

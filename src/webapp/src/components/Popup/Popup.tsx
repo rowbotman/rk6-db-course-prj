@@ -23,17 +23,20 @@ export class Popup extends React.Component<IPopupProps> {
 	render() {
 		return (
 			<div className={s.popup}>
-				<div className="popup__header">
-					<div className={s.popup__title}>{this.props.title}</div>
-					<i
-						className={cn(i.icon, i.icon_btn, i.icon_type_cross, i.icon_color_black, i.icon_size_small)}
-						onClick={this.#onClick}
-					/>
-				</div>
-				<hr/>
-				<div className={s.popup__content}>
-					<div className="popup__text">{this.props?.text || ''}</div>
-					{this.props?.children}
+				<div className={s.popup__container}>
+					<div className={s.popup__header}>
+						<div className={s.popup__title}>{this.props.title}</div>
+						<span className={s.popup__close}>
+						<i
+							className={cn(i.icon, i.icon_btn, i.icon_type_cross, i.icon_color_black, i.icon_size_small)}
+							onClick={this.#onClick}
+						/>
+					</span>
+					</div>
+					<div className={s.popup__content}>
+						<div className={s.popup__text}>{this.props?.text || ''}</div>
+						{this.props?.children}
+					</div>
 				</div>
 			</div>
 		);

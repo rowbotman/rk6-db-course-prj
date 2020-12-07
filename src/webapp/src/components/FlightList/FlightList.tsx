@@ -50,11 +50,15 @@ export class FlightList extends React.Component<IFlightListProps, IFlightListSta
 		},
 	];
 
-	#rowHandler = (type: RowActions, internalId: number) => {
+	#rowHandler = async (type: RowActions, internalId: number) => {
 		console.log('click');
 		switch (type) {
 			case RowActions.kCancel:
-				void this.#api.cancelFlight(internalId.toString());
+				try {
+					await this.#api.cancelFlight(internalId.toString());
+				} catch (e) {
+					console.error(e);
+				}
 				return;
 			case RowActions.kChange:
 				this.setState({ openChange: true, changingFlight: internalId });
@@ -67,8 +71,14 @@ export class FlightList extends React.Component<IFlightListProps, IFlightListSta
 		console.log(changingFlight);
 		if (changingFlight >= 0)
 			return (
-				<Popup title={`Изменение бронирования ${this.#rows[changingFlight].id}`}>
-					<ChangeBook {...this.#rows[changingFlight]}/>
+				<Popup
+					title={`Изменение бронирования ${this.#rows[changingFlight].id}`}
+					onClose={() => this.setState({ openChange: false, changingFlight: -1 })}
+				>
+					<ChangeBook
+						onCancel={() => this.setState({ openChange: false, changingFlight: -1 })}
+						{...this.#rows[changingFlight]}
+					/>
 				</Popup>
 			);
 	}
@@ -82,10 +92,10 @@ export class FlightList extends React.Component<IFlightListProps, IFlightListSta
 				<Table>
 					<TableHead>
 						<TableRow>
-							<TableCell align="center">Номер рейса</TableCell>
+							<TableCell align="center">Дата</TableCell>
 							<TableCell align="left">Город отправления</TableCell>
 							<TableCell align="left">Город прибытия</TableCell>
-							<TableCell align="center">Дата</TableCell>
+							<TableCell align="center">Номер рейса</TableCell>
 							<TableCell align="center">Действия</TableCell>
 						</TableRow>
 					</TableHead>
