@@ -7,11 +7,15 @@ import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 
-import { IFlightListProps, RowActions } from './types';
-import { IFlight } from 'Interfaces';
 import { ReservationRow } from 'Components/ReservationRow';
-import { FlightNetwork } from 'Network';
 import { Popup } from 'Components/Popup';
+import { ChangeBook } from 'Components/ChangeBook';
+
+import { FlightNetwork } from 'Network';
+
+import { IFlight } from 'Interfaces';
+
+import { IFlightListProps, RowActions } from './types';
 
 interface IFlightListState {
 	openChange: boolean;
@@ -46,35 +50,35 @@ export class FlightList extends React.Component<IFlightListProps, IFlightListSta
 		},
 	];
 
-	rowHandler = (type: RowActions, internalId: number) => {
+	#rowHandler = (type: RowActions, internalId: number) => {
 		console.log('click');
 		switch (type) {
 			case RowActions.kCancel:
 				void this.#api.cancelFlight(internalId.toString());
 				return;
 			case RowActions.kChange:
-				this.setState({ openChange: true, changingFlight: internalId.toString() });
+				this.setState({ openChange: true, changingFlight: internalId });
+				return;
 		}
 	};
 
 	drawPopup() {
-		const {changingFlight} = this.state;
-		if (changingFlight)
-		return (
-			<Popup>
-				<ChangeBook {...this.#rows[changingFlight]}/>
-			</Popup>
-		);
+		const { changingFlight } = this.state;
+		console.log(changingFlight);
+		if (changingFlight >= 0)
+			return (
+				<Popup title={`Изменение бронирования ${this.#rows[changingFlight].id}`}>
+					<ChangeBook {...this.#rows[changingFlight]}/>
+				</Popup>
+			);
 	}
 
 	render() {
 		const { openChange } = this.state;
-		if (openChange) {
-			this.drawPopup();
-		}
 		const rows = this.#rows;
 		return (
 			<TableContainer>
+				{openChange && this.drawPopup()}
 				<Table>
 					<TableHead>
 						<TableRow>
@@ -88,7 +92,7 @@ export class FlightList extends React.Component<IFlightListProps, IFlightListSta
 					<TableBody>
 						{rows.sort((a, b) => a.date - b.date)
 							.map((flight, idx) => (
-								<ReservationRow key={idx} action={this.rowHandler} internalId={idx} {...flight}/>
+								<ReservationRow key={idx} action={this.#rowHandler} internalId={idx} {...flight}/>
 							))}
 					</TableBody>
 				</Table>
