@@ -127,5 +127,6 @@ module.exports = (env, options) => {
             path: path.resolve(__dirname, '../dist'),
             publicPath: '/',
         },
+        devServer: require('./devServer'),
     };
 };

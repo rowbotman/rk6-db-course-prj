@@ -11,4 +11,3 @@ dist
 *.map
 *.css
 .htaccess
-package-lock.json

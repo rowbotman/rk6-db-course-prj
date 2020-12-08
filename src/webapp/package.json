@@ -6,6 +6,7 @@
   "scripts": {
     "build": "npx webpack --progress --mode=development",
     "build:watch": "npx webpack --progress -w --mode=development",
+    "start:dev": "npx webpack serve",
     "test": "echo 0"
   },
   "keywords": [
@@ -38,8 +39,10 @@
     "stylelint": "^13.8.0",
     "thread-loader": "^3.0.1",
     "ts-loader": "^8.0.11",
+    "url-loader": "^4.1.1",
     "webpack": "^5.9.0",
-    "webpack-cli": "^4.2.0"
+    "webpack-cli": "^4.2.0",
+    "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.1",
