@@ -16,10 +16,14 @@ import { FlightNetwork } from 'Network';
 import { IFlight } from 'Interfaces';
 
 import { IFlightListProps, RowActions } from './types';
+import { LinearProgress } from '@material-ui/core';
 
 interface IFlightListState {
 	openChange: boolean;
 	changingFlight: number;
+	rows: IFlight[];
+	error: boolean;
+	loading: boolean;
 }
 
 export class FlightList extends React.Component<IFlightListProps, IFlightListState> {
@@ -28,30 +32,30 @@ export class FlightList extends React.Component<IFlightListProps, IFlightListSta
 	state: IFlightListState = {
 		changingFlight: -1,
 		openChange: false,
+		rows: [],
+		error: false,
+		loading: true,
 	};
-	#rows: IFlight[] = [
-		{
-			date: (new Date()).getTime(),
-			departure: 'Moscow',
-			arrival: 'Tokyo',
-			id: '123',
-		},
-		{
-			date: (new Date()).getTime(),
-			departure: 'Moscow',
-			arrival: 'Tokyo',
-			id: '123',
-		},
-		{
-			date: (new Date()).getTime(),
-			departure: 'Moscow',
-			arrival: 'Tokyo',
-			id: '123',
-		},
-	];
+
+	componentDidMount(): void {
+		void this.#loadFlights();
+	}
+
+	#loadFlights = async () => {
+		try {
+			const data = await this.#api.loadUserFlights(this.props.userId);
+			console.log('aaa');
+			console.log(data);
+			if (data) {
+				this.setState({ rows: data.flights, loading: false });
+			}
+		} catch (e) {
+			console.error(e);
+			this.setState({ error: true, loading: false });
+		}
+	};
 
 	#rowHandler = async (type: RowActions, internalId: number) => {
-		console.log('click');
 		switch (type) {
 			case RowActions.kCancel:
 				try {
@@ -68,24 +72,29 @@ export class FlightList extends React.Component<IFlightListProps, IFlightListSta
 
 	drawPopup() {
 		const { changingFlight } = this.state;
-		console.log(changingFlight);
-		if (changingFlight >= 0)
+		if (changingFlight >= 0) {
+			const { rows } = this.state;
 			return (
 				<Popup
-					title={`Изменение бронирования ${this.#rows[changingFlight].id}`}
+					title={`Изменение бронирования ${rows[changingFlight].id}`}
 					onClose={() => this.setState({ openChange: false, changingFlight: -1 })}
 				>
 					<ChangeBook
 						onCancel={() => this.setState({ openChange: false, changingFlight: -1 })}
-						{...this.#rows[changingFlight]}
+						{...rows[changingFlight]}
 					/>
 				</Popup>
 			);
+		}
+		return <></>;
 	}
 
 	render() {
 		const { openChange } = this.state;
-		const rows = this.#rows;
+		const { rows, loading } = this.state;
+		if (loading) {
+			return <LinearProgress />;
+		}
 		return (
 			<TableContainer>
 				{openChange && this.drawPopup()}

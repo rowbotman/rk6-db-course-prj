@@ -1,11 +1,12 @@
 type TMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 
 export class Network {
-	static fetchGet = async <T = {}>(path = '/', api = HOST) => {
-		return Network.fetchRequest('GET', path, api);
+	static fetchGet = async <T = {}, R = {}>(path = '/', api = HOST) => {
+		console.log(path);
+		return Network.fetchRequest<T, R>('GET', path, api);
 	};
 
-	static fetchRequest = async <T = {}>(method: TMethod, path: string, api = HOST, body: T = null) => {
+	static fetchRequest = async <T = {}, R = {}>(method: TMethod, path: string, api = HOST, body: T = null): Promise<R> => {
 		if (path.includes('undefined')) {
 			throw new Error('Invalid path, boy');
 		}

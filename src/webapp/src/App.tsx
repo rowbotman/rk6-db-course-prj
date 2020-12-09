@@ -35,8 +35,8 @@ export class App extends React.Component<IAppProps, IAppState> {
 			case Pages.kFlightList:
 				return (
 					<div>
-						<FlightList/>
 						<AddFlightBtn onClick={this.onAddBtnClick.bind(this)}/>
+						<FlightList userId={'100'}/>
 					</div>
 				);
 			case Pages.kAddForm:
@@ -61,7 +61,7 @@ export class App extends React.Component<IAppProps, IAppState> {
 		return (
 			<div className="main">
 				<Header/>
-				<Container maxWidth="sm">
+				<Container maxWidth="md">
 					{this.detectPage()}
 				</Container>
 			</div>

@@ -1,3 +1,4 @@
+const generateId = require('./utils');
 const express = require('express');
 const cors = require('cors');
 const app = express();
@@ -6,6 +7,7 @@ const corsOptions = {
     origin: [
         'http://localhost',
         'http://localhost:8086',
+        'http://localhost:9001',
     ],
     methods: ['PUT', 'POST', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -23,6 +25,31 @@ app.use((req, res, next) => {
 });
 
 app.post('/api/flight', statusOK);
+app.get('/api/user/order/', (req, res) => {
+    const data = [
+        {
+            date: (new Date()).getTime(),
+            departure: 'Moscow',
+            arrival: 'Tokyo',
+            id: generateId(),
+        },
+        {
+            date: (new Date()).getTime(),
+            departure: 'Moscow',
+            arrival: 'Tokyo',
+            id: generateId(),
+        },
+        {
+            date: (new Date()).getTime(),
+            departure: 'Moscow',
+            arrival: 'Tokyo',
+            id: generateId(),
+        },
+    ];
+    return res.json({
+        flights: data
+    });
+})
 
 const kPort = 3003;
 app.listen(kPort, () => {

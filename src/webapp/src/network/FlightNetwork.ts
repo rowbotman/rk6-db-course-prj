@@ -1,4 +1,4 @@
-import { IMap } from 'Interfaces';
+import { IFlight, IMap } from 'Interfaces';
 import { Network } from 'Network/Network';
 
 export interface IFlightNetworkRequestData {
@@ -6,6 +6,11 @@ export interface IFlightNetworkRequestData {
 	flight: string;
 	departure: string;
 	arrival: string;
+}
+
+
+export interface IFlightNetworkFlightsRequestData {
+	flights: IFlight[];
 }
 
 export class FlightNetwork {
@@ -21,5 +26,9 @@ export class FlightNetwork {
 
 	cancelFlight = async (orderId: string) => {
 		return await Network.fetchDelete(`api/flight?orderId=${orderId}`);
+	};
+
+	loadUserFlights = async (userId: string) => {
+		return await Network.fetchGet<{}, IFlightNetworkFlightsRequestData>(`api/user/order/?userId=${userId}`);
 	};
 }

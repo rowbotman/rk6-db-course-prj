@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npx webpack --progress --mode=development",
     "build:watch": "npx webpack --progress -w --mode=development",
-    "start:dev": "npx webpack serve",
+    "start:dev": "npx webpack serve --mode=development",
     "test": "echo 0"
   },
   "keywords": [
