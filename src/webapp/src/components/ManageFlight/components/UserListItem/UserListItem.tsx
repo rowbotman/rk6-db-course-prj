@@ -12,8 +12,9 @@ import { RowActions } from 'Components/FlightList';
 export const UserListItem = (
 	props: {
 		lastName: string;
-		id: string;
-		action: (type: RowActions, internalId: string) => void;
+		orderId: string;
+		idx: number;
+		action: (type: RowActions, internalId: number) => void;
 	},
 ) => {
 	return (
@@ -24,7 +25,7 @@ export const UserListItem = (
 					className={s.reservationRow__btn}
 					variant="outlined"
 					color="secondary"
-					onClick={() => props.action(RowActions.kChange, props.id)}
+					onClick={() => props.action(RowActions.kChange, props.idx)}
 				>
 					Изменить
 				</Button>
@@ -32,7 +33,7 @@ export const UserListItem = (
 					className={s.reservationRow__btn}
 					variant="outlined"
 					startIcon={<DeleteIcon/>}
-					onClick={() => props.action(RowActions.kCancel, props.id)}
+					onClick={() => props.action(RowActions.kCancel, props.idx)}
 				>
 					Отменить
 				</Button>

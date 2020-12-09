@@ -1,22 +1,37 @@
 import * as React from 'react';
-import { IFlight } from 'Interfaces';
+
+import { IBooking, IFlightChangeInfo } from 'Interfaces';
+
+import { FlightNetwork } from 'Network';
+
+import { parseFromData } from 'Utils';
+
 import { FlightForm } from 'Components/FlightForm';
 
 import { CHANGE_BOOK_FIELDS } from './types';
 import * as s from './ChangeBook.scss';
-import { FlightNetwork } from 'Network';
-import { parseFromData } from 'Utils';
-import { IFlightChangeInfo } from 'Interfaces/IFlightChangeInfo';
 
-export interface IChangeBookProps extends IFlight {
+export interface IChangeBookProps extends IBooking {
 	onCancel?: () => void;
-	onSubmit?: () => void;
+	onSubmit?: (booking: IBooking) => void;
 }
 
 export interface IChangeBookState {
+	booking: IBooking;
+	error: boolean,
+	loading: boolean,
 }
 
 export class ChangeBook extends React.Component<IChangeBookProps, IChangeBookState> {
+
+	state: IChangeBookState = {
+		booking: {
+			orderId: this.props.orderId,
+			lastName: this.props.lastName,
+		},
+		loading: false,
+		error: false,
+	};
 
 	#formRef = React.createRef<HTMLFormElement>();
 	#api = new FlightNetwork();
@@ -25,19 +40,27 @@ export class ChangeBook extends React.Component<IChangeBookProps, IChangeBookSta
 		try {
 			const parsed = parseFromData(this.#formRef.current);
 			const info = parsed as unknown as IFlightChangeInfo;
-			const res = await this.#api.changeBook(this.props.id, info);
+			const res = await this.#api.changeBooking(this.props.orderId, info);
 			if (res.hasOwnProperty('error')) {
 				this.setState({ error: true, loading: false });
 			} else {
-				this.setState({ error: false, loading: false });
+				this.setState({
+					booking: res,
+					error: false,
+					loading: false,
+				});
+				if (this.props?.onSubmit) {
+					this.props.onSubmit(res);
+				}
 			}
 		} catch (e) {
 			console.error(e);
-			this.setState({error: true});
+			this.setState({ error: true });
 		}
 	}
 
 	onCancel() {
+		console.log('click');
 		if (this.props?.onCancel) {
 			this.props.onCancel();
 		}

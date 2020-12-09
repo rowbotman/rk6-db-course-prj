@@ -54,7 +54,13 @@ export class App extends React.Component<IAppProps, IAppState> {
 					/>
 				);
 			case Pages.kManageFlight:
-				return <ManageFlight pCount={this.pCount} flightId={this.flightId}/>;
+				return (
+					<ManageFlight
+						pCount={this.pCount}
+						flightId={this.flightId}
+						onBack={() => this.setState({ openPage: Pages.kFlightList })}
+					/>
+				);
 			default:
 				return <p>404 Page not found</p>;
 

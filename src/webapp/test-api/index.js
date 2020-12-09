@@ -1,5 +1,6 @@
 const generateId = require('./utils');
 const express = require('express');
+const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 
@@ -16,6 +17,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.use(bodyParser.json());
 
 const statusOK = (req, res) => res.json({});
 
@@ -26,6 +28,7 @@ app.use((req, res, next) => {
 
 app.post('/api/flight', statusOK);
 app.put('/api/order/:orderId', statusOK);
+app.delete('/api/flight', statusOK);
 app.get('/api/user/order/', (req, res) => {
     const data = [
         {
@@ -50,7 +53,15 @@ app.get('/api/user/order/', (req, res) => {
     return res.json({
         flights: data
     });
-})
+});
+
+app.post('/api/order', (req, res) => {
+    console.log(req.body);
+    return res.json({
+        orderId: generateId(),
+        lastName: req.body.lastName || '',
+    });
+});
 
 const kPort = 3003;
 app.listen(kPort, () => {
