@@ -25,6 +25,7 @@ app.use((req, res, next) => {
 });
 
 app.post('/api/flight', statusOK);
+app.put('/api/order/:orderId', statusOK);
 app.get('/api/user/order/', (req, res) => {
     const data = [
         {

@@ -44,8 +44,6 @@ export class FlightList extends React.Component<IFlightListProps, IFlightListSta
 	#loadFlights = async () => {
 		try {
 			const data = await this.#api.loadUserFlights(this.props.userId);
-			console.log('aaa');
-			console.log(data);
 			if (data) {
 				this.setState({ rows: data.flights, loading: false });
 			}
@@ -80,7 +78,10 @@ export class FlightList extends React.Component<IFlightListProps, IFlightListSta
 					onClose={() => this.setState({ openChange: false, changingFlight: -1 })}
 				>
 					<ChangeBook
-						onCancel={() => this.setState({ openChange: false, changingFlight: -1 })}
+						onCancel={async () => {
+							this.setState({ openChange: false, changingFlight: -1 });
+							await this.#loadFlights();
+						}}
 						{...rows[changingFlight]}
 					/>
 				</Popup>
@@ -93,7 +94,7 @@ export class FlightList extends React.Component<IFlightListProps, IFlightListSta
 		const { openChange } = this.state;
 		const { rows, loading } = this.state;
 		if (loading) {
-			return <LinearProgress />;
+			return <LinearProgress/>;
 		}
 		return (
 			<TableContainer>

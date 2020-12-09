@@ -22,11 +22,15 @@ export class Network {
 		return await res.json();
 	};
 
-	static fetchDelete = async <T = {}>(path: string, body: T = null, api = HOST) => {
+	static fetchDelete = async <T = {}, R = {}>(path: string, body: T = null, api = HOST) => {
 		return Network.fetchRequest('DELETE', path, api, body);
 	};
 
-	static fetchPost = async <T = {}>(path: string, body: T = null, api = HOST) => {
-		return Network.fetchRequest('POST', path, api, body);
+	static fetchPost = async <T = {}, R = {}>(path: string, body: T = null, api = HOST) => {
+		return Network.fetchRequest<T, R>('POST', path, api, body);
+	};
+
+	static fetchPut = async <T = {}, R = {}>(path: string, body: T = null, api = HOST) => {
+		return Network.fetchRequest<T, R>('PUT', path, api, body);
 	};
 }

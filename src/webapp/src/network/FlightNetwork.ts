@@ -1,5 +1,6 @@
 import { IFlight, IMap } from 'Interfaces';
 import { Network } from 'Network/Network';
+import { IFlightChangeInfo } from 'Interfaces/IFlightChangeInfo';
 
 export interface IFlightNetworkRequestData {
 	passengers: number;
@@ -30,5 +31,9 @@ export class FlightNetwork {
 
 	loadUserFlights = async (userId: string) => {
 		return await Network.fetchGet<{}, IFlightNetworkFlightsRequestData>(`api/user/order/?userId=${userId}`);
+	};
+
+	changeBook = async (orderId: string, info: IFlightChangeInfo) => {
+		return await Network.fetchPut<IFlightChangeInfo, {}>(`api/order/${orderId}`, info);
 	};
 }
