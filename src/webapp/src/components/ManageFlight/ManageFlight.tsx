@@ -8,7 +8,16 @@ import { IRow } from 'Components/AddForm/types';
 
 import * as f from 'Styles/_font.scss';
 
-export class ManageFlight extends React.Component<{}> {
+interface IManageFlightProps {
+	flightId: string;
+	pCount: number;
+}
+
+interface IManageFlightState {
+	pCountAvailable: number;
+}
+
+export class ManageFlight extends React.Component<IManageFlightProps, IManageFlightState> {
 
 	#myRef = React.createRef<HTMLFormElement>();
 	#fields: IRow[] = [
@@ -19,8 +28,12 @@ export class ManageFlight extends React.Component<{}> {
 		},
 	];
 
+	state: IManageFlightState = {
+		pCountAvailable: this.props.pCount,
+	};
+
 	render(): JSX.Element {
-		const pCountAvailable = 0;
+		const { pCountAvailable } = this.state;
 		return (
 			<Container className={s.addForm}>
 				<div className={s.addForm__title}>

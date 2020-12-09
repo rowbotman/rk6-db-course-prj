@@ -24,6 +24,8 @@ export class App extends React.Component<IAppProps, IAppState> {
 		openPage: Pages.kFlightList,
 		error: false,
 	};
+	pCount = 0;
+	flightId = '';
 
 	private onAddBtnClick() {
 		this.setState({ openPage: Pages.kAddForm });
@@ -45,12 +47,14 @@ export class App extends React.Component<IAppProps, IAppState> {
 						onCancel={() => this.setState({ openPage: Pages.kFlightList })}
 						onSubmit={(flight, pCount) => {
 							console.log('state changed');
+							this.pCount = pCount;
+							this.flightId = flight;
 							this.setState({ openPage: Pages.kManageFlight });
 						}}
 					/>
 				);
 			case Pages.kManageFlight:
-				return <ManageFlight/>;
+				return <ManageFlight pCount={this.pCount} flightId={this.flightId}/>;
 			default:
 				return <p>404 Page not found</p>;
 

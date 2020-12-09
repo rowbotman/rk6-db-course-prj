@@ -106,7 +106,7 @@ export class FlightList extends React.Component<IFlightListProps, IFlightListSta
 							<TableCell align="left">Город отправления</TableCell>
 							<TableCell align="left">Город прибытия</TableCell>
 							<TableCell align="center">Номер рейса</TableCell>
-							<TableCell align="center">Действия</TableCell>
+							{/*<TableCell align="center">Действия</TableCell>*/}
 						</TableRow>
 					</TableHead>
 					<TableBody>
