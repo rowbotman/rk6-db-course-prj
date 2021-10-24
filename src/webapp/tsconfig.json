@@ -1,0 +1,73 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "pretty": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "module": "esNext",
+    "moduleResolution": "node",
+    "target": "es6",
+    "experimentalDecorators": true,
+    "downlevelIteration": true,
+    "jsx": "react",
+    "allowJs": false,
+    "lib": [
+      "es2020",
+      "dom"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "redux": [
+        "./node_modules/redux"
+      ],
+      "Redux": [
+        "src/redux/index"
+      ],
+      "Redux/*": [
+        "src/redux/*"
+      ],
+      "Interfaces": [
+        "src/interfaces/index"
+      ],
+      "Interfaces/*": [
+        "src/interfaces/*"
+      ],
+      "Network": [
+        "src/network/index"
+      ],
+      "Network/*": [
+        "src/network/*"
+      ],
+      "Components": [
+        "src/components/index"
+      ],
+      "Components/*": [
+        "src/components/*"
+      ],
+      "Const": [
+        "src/const/index"
+      ],
+      "Const/*": [
+        "src/const/*"
+      ],
+      "Utils": [
+        "src/utils/index"
+      ],
+      "Utils/*": [
+        "src/utils/*"
+      ],
+      "*": [
+        "src/*"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "src/**/*",
+    "glob/index.d.ts"
+  ]
+}
